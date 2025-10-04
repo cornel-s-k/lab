@@ -1,0 +1,546 @@
+/* General Styles for modern look */
+body {
+  background-color: #f8f9fa; /* Consistent light background */
+}
+
+/* Section Styling */
+.about-section {
+  padding-top: 5rem;
+  padding-bottom: 5rem;
+}
+
+.container-fluid {
+  max-width: 1400px; /* Wider container for a more spacious feel */
+  margin: 0 auto;
+}
+
+/* Heading and Paragraph Styling */
+.text-dark {
+  color: #212529 !important;
+}
+
+.max-width-p {
+  max-width: 700px;
+  margin: 0 auto 1.5rem auto;
+}
+
+.custom-list {
+  text-align: left;
+}
+
+.custom-list li {
+  margin-bottom: 0.5rem;
+  font-size: 1.1rem;
+}
+
+/* Card Styling */
+.card {
+  border-radius: 12px;
+  overflow: hidden;
+  border: none;
+}
+
+.shadow-sm {
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05) !important;
+}
+
+.transition-hover {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.transition-hover:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Image Styling */
+.card-img-custom {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  object-fit: cover;
+  height: 200px; /* Ensure images have a consistent height */
+  filter: grayscale(80%); /* Add a subtle filter for a professional look */
+  transition: filter 0.3s ease;
+}
+
+.transition-hover:hover .card-img-custom {
+  filter: grayscale(0%); /* Color image on hover */
+}
+
+/* Button Styling */
+.custom-btn {
+  border-radius: 50px;
+  padding: 12px 30px;
+  font-weight: 600;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.custom-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(220, 53, 69, 0.3) !important;
+}
+
+/* Custom link styles for smooth interaction */
+.hover-lift {
+  transition: transform 0.3s ease;
+}
+
+.hover-lift:hover {
+  transform: translateY(-5px);
+}
+
+/* Optional: OrgChart styles for better integration */
+.org-chart .org-node .org-card {
+  background-color: #f8f9fa;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 10px 15px;
+  margin: 5px;
+  transition: all 0.3s ease;
+}
+
+.org-chart .org-node .org-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+/* Header Component */
+.btn-custom-hover {
+  transition: background-color 0.3s ease;
+}
+
+.btn-custom-hover:hover,
+.btn-custom-hover:active,
+.btn-custom-hover:focus {
+  background-color: #A8A196 !important;
+  color: #0D0D0D;
+}
+
+/* Custom.css */
+
+/* Tambahkan di bawah bagian Header Component */
+
+.nav-link {
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.nav-link:hover,
+.nav-link:focus {
+  color: #8E1616 !important; /* Contoh: berubah menjadi warna merah tua */
+  transform: translateY(-3px); /* Naik sedikit ke atas */
+}
+
+/* Animasi untuk tombol 'Hubungi Kami' */
+.btn-custom-hover {
+  transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.btn-custom-hover:hover,
+.btn-custom-hover:active,
+.btn-custom-hover:focus {
+  background-color: #EAD196 !important; /* Berubah jadi kuning muda */
+  color: #555 !important;
+  transform: scale(1.05); /* Membesar sedikit */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Hero Section Styling */
+.hero-section {
+  min-height: 70vh;
+}
+
+.hero-overlay {
+  background: linear-gradient(
+    rgba(255, 255, 255, 0.6),
+    rgba(255, 255, 255, 0.3)
+  );
+}
+
+/* Perbaikan kontras teks Hero Section */
+.hero-section h1,
+.hero-section h2,
+.hero-section p {
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.6);
+}
+
+/* Overlay lebih gelap supaya teks putih lebih jelas */
+.hero-overlay {
+  background: linear-gradient(
+    rgba(0, 0, 0, 0.5),
+    rgba(0, 0, 0, 0.3)
+  );
+}
+
+
+.hero-content {
+  padding-bottom: 10vh;
+}
+
+/* Warna aksen */
+.text-accent {
+  color: #e63946; /* merah aksen */
+}
+
+/* Animasi Fade-in Up */
+.fade-in-up {
+  opacity: 0;
+  transform: translateY(30px);
+  animation: fadeInUp 1s forwards;
+}
+.fade-in-up.delay-1 {
+  animation-delay: 0.3s;
+}
+.fade-in-up.delay-2 {
+  animation-delay: 0.6s;
+}
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive typography */
+@media (max-width: 768px) {
+  .hero-content h1 {
+    font-size: 2rem;
+  }
+  .hero-content h2 {
+    font-size: 1.5rem;
+  }
+  .hero-content p {
+    font-size: 1rem;
+  }
+}
+
+
+/* Custom.css */
+
+/* ===== Section Background ===== */
+.timeline-section {
+  background: linear-gradient(135deg, #fff, #f9f6f1);
+  position: relative;
+  overflow: hidden;
+}
+.timeline-section::after {
+  content: "";
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  background: rgba(234, 209, 150, 0.25); /* EAD196 transparan */
+  border-radius: 50%;
+  top: -100px;
+  right: -100px;
+}
+
+/* ===== Title ===== */
+.sejarah-title {
+  color: #8E1616; /* Merah Tua */
+  position: relative;
+  padding-bottom: 10px;
+}
+.sejarah-title::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 3px;
+  background-color: #EAD196; /* Kuning Muda */
+  border-radius: 5px;
+}
+
+/* ===== Timeline Container ===== */
+.card-timeline-container {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 0 50px;
+}
+.card-timeline-container::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 70px;
+  right: 70px;
+  height: 2px;
+  background: linear-gradient(to right, #8E1616, #A8A196); /* Merah ke abu beige */
+  z-index: 1;
+}
+
+/* ===== Timeline Card ===== */
+.timeline-card {
+  background-color: #fff;
+  border: 1px solid #A8A196;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(168, 161, 150, 0.3);
+  min-height: 180px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  width: 100%;
+  max-width: 500px;
+  z-index: 2;
+  animation: fadeIn 0.5s ease;
+}
+.timeline-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 20px rgba(142, 22, 22, 0.3); /* bayangan merah tua */
+}
+.timeline-card .year-text {
+  color: #8E1616;
+  font-size: 1.8rem;
+  margin-bottom: 15px;
+}
+.timeline-card p {
+  color: #555;
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+/* ===== Highlight & Normal Boxes ===== */
+.highlight-box {
+  background-color: #EAD196; /* Kuning muda */
+  border-color: #8E1616;
+}
+.highlight-box .year-text {
+  color: #8E1616;
+}
+.normal-box {
+  background-color: #fdfdfd; /* Putih */
+  border-color: #A8A196;
+}
+
+/* ===== Navigation Buttons ===== */
+.card-nav-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: #8E1616; /* Merah Tua */
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 45px;
+  height: 45px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.2rem;
+  box-shadow: 0 2px 10px rgba(142, 22, 22, 0.3);
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  z-index: 3;
+}
+.card-nav-btn:hover {
+  background-color: #A8A196; /* abu beige */
+  transform: translateY(-50%) scale(1.05);
+  box-shadow: 0 4px 15px rgba(168, 161, 150, 0.4);
+  color: #dd1b1b;
+}
+.prev-btn { left: 0; }
+.next-btn { right: 0; }
+
+/* ===== Indicator Dots ===== */
+.timeline-indicators .dot {
+  height: 12px;
+  width: 12px;
+  margin: 0 6px;
+  background-color: #A8A196;
+  border-radius: 50%;
+  display: inline-block;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+.timeline-indicators .dot.active {
+  background-color: #8E1616;
+  transform: scale(1.2);
+}
+.timeline-indicators .dot:hover {
+  background-color: #EAD196;
+}
+
+/* ===== Animation ===== */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 768px) {
+  .card-timeline-container { padding: 0 30px; }
+  .timeline-card { min-height: 200px; padding: 20px; }
+  .timeline-card .year-text { font-size: 1.5rem; }
+  .timeline-card p { font-size: 0.9rem; }
+  .card-nav-btn { width: 40px; height: 40px; font-size: 1rem; }
+}
+@media (max-width: 576px) {
+  .card-timeline-container { padding: 0 20px; }
+  .card-nav-btn { width: 35px; height: 35px; font-size: 0.9rem; }
+  .sejarah-title { font-size: 2rem; }
+}
+
+/* Tugas Component */
+.custom-btn {
+  background-color: #ead196;
+  color: #a8a8a8;
+  border-color: #ead196;
+  transition: all 0.3s ease;
+}
+.custom-btn:hover {
+  background-color: #d1b87d;
+  border-color: #d1b87d;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+.text-danger {
+  color: #8e1616 !important;
+}
+.custom-margin-top {
+  margin-top: 100px; /* Jarak atas custom untuk section */
+}
+
+/* Tambahan responsif */
+.tugas-section h2 {
+  line-height: 1.3;
+}
+.tugas-img {
+  max-width: 90%;
+  transition: transform 0.4s ease;
+}
+.tugas-img:hover {
+  transform: scale(1.05);
+}
+
+/* Animasi fade-in */
+.fade-in {
+  opacity: 0;
+  transform: translateY(30px);
+  animation: fadeInUp 1s forwards;
+}
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+/* ======================================= */
+/* 1. STYLING UMUM DAN WARNA */
+/* ======================================= */
+
+.timeline-page-bg {
+    background-color: #f7f9fc; /* Light gray/blue background */
+}
+
+/* Kustomisasi Tabel */
+.timeline-table {
+    border: 1px solid #dee2e6;
+    margin-bottom: 0;
+    min-width: 800px; /* Lebar minimum untuk Desktop agar horizontal scroll bekerja */
+}
+
+.timeline-table-container {
+    overflow-x: auto; /* Memungkinkan scroll horizontal di desktop/tablet kecil */
+}
+
+/* Header Tabel yang Lebih Berwarna dan Sticky */
+.table-primary {
+    background-color: #007bff !important; /* Biru Primer */
+    color: white;
+    /* Optional: position: sticky; top: 0; z-index: 10; */
+}
+
+.timeline-table th {
+    white-space: nowrap; 
+    padding: 1rem 0.75rem;
+    font-size: 0.9rem;
+}
+
+/* Sel Fasilitas (Kolom Kiri) yang Lebih Menonjol */
+.fasilitas-header {
+    background-color: #0056b3 !important; /* Biru Lebih Gelap */
+    color: white;
+    font-weight: bold;
+    min-width: 150px; 
+}
+
+.fasilitas-cell {
+    background-color: #e9f0f7; 
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+/* Sel Timeline (Data Waktu) */
+.timeline-cell {
+    text-align: center;
+    font-size: 0.9rem;
+    padding: 0.5rem 0.25rem; 
+}
+
+/* ======================================= */
+/* 2. RESPONSIF (MOBILE FIRST) */
+/* ======================================= */
+
+@media (max-width: 767.98px) {
+    /* Hapus scroll horizontal yang dipaksa di mobile */
+    .timeline-table-container {
+        overflow-x: hidden; 
+    }
+
+    /* Sembunyikan Header di Mobile */
+    .timeline-table thead {
+        display: none;
+    }
+
+    /* Ubah tampilan baris menjadi blok (seperti card) */
+    .timeline-table tbody, 
+    .timeline-table tr {
+        display: block;
+        width: 100%;
+    }
+
+    /* Berikan styling card pada setiap baris data */
+    .timeline-table tr {
+        margin-bottom: 1.5rem;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        background-color: white;
+    }
+
+    /* Ubah tampilan sel (td) menjadi blok */
+    .timeline-table td {
+        display: block;
+        text-align: right !important; 
+        padding: 0.5rem 1rem;
+        border: none !important; 
+        position: relative;
+    }
+
+    /* Tambahkan "Label" menggunakan data-label */
+    .timeline-table td::before {
+        content: attr(data-label); 
+        position: absolute;
+        left: 1rem;
+        width: 50%;
+        text-align: left;
+        font-weight: bold;
+        color: #495057; 
+    }
+
+    /* Sel Fasilitas di Mobile (Judul Card) */
+    .fasilitas-cell {
+        background-color: #007bff1a; 
+        border-top-left-radius: 8px;
+        border-top-right-radius: 8px;
+        text-align: center !important;
+        font-size: 1.1rem;
+        padding: 0.75rem 1rem;
+        color: #007bff !important;
+    }
+    .fasilitas-cell::before {
+        content: none; /* Sembunyikan label "FASILITAS" */
+    }
+}
