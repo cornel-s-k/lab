@@ -8,34 +8,6 @@ import { Link } from "react-router-dom";
 import Footer from "../home/Footer";
 import "../../Custom.css";
 
-// CSS file for custom styles
-// Add this to your Custom.css file
-/*
-.section-title {
-  color: #0d6efd;
-  border-left: 5px solid #ffc107;
-  padding-left: 10px;
-  font-weight: 700;
-}
-
-.card-custom {
-  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-}
-
-.card-custom:hover {
-  transform: translateY(-10px);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15) !important;
-}
-
-.animate__fadeIn {
-  animation-duration: 1.5s;
-}
-
-.table-photo {
-  border: 2px solid #ddd;
-  padding: 2px;
-}
-*/
 
 // Custom active shape for pie chart hover effect
 const renderActiveShape = (props) => {
@@ -96,51 +68,57 @@ const SDM = () => {
 
   return (
     <>
-      <div className="container py-5 animate__animated animate__fadeIn">
-        <h2 className="fw-bold text-center mb-2 text-danger">
-          Inovasi Dimulai dari Sini: Memperkenalkan Tim Unggul Kami
-        </h2>
-        <p className="text-center text-muted mb-5 lead">
-          Tim Sumber Daya Manusia kami adalah aset terbesar. Dengan beragam keahlian dan dedikasi, mereka adalah kekuatan di balik setiap inovasi dan layanan yang kami berikan.
-        </p>
+       <div className="container py-5 animate__animated animate__fadeIn">
+       <h2 className="fw-bold text-center mb-2 text-danger">
+        Inovasi Dimulai dari Sini: Memperkenalkan Tim Unggul Kami
+         </h2>
+     <p className="text-center text-muted mb-5 lead fs-5"> {/* ADDED 'fs-5' for larger font */}
+ Tim Sumber Daya Manusia kami adalah aset terbesar. Dengan beragam keahlian dan dedikasi, mereka adalah kekuatan di balik setiap inovasi dan layanan yang kami berikan.
+ </p>
 
-      {/* Layanan Utama Section */}
+
+ {/* Layanan Utama Section */}
 <div className="mb-5 animate__animated animate__fadeInUp">
-  <h4 className="fw-bold mb-3 section-title">
-    Layanan Inti Kami: Menggerakkan Masa Depan
-  </h4>
-  <p className="text-muted">
-    Dengan dukungan para ahli berpengalaman dan fasilitas berstandar tinggi, 
-    kami berkomitmen memberikan layanan terbaik untuk mendukung riset, inovasi, 
-    serta solusi praktis di bidang kelautan dan pesisir. 
-    Setiap layanan dirancang untuk menjawab tantangan nyata sekaligus membuka 
-    peluang baru dalam pengembangan ilmu pengetahuan maupun penerapannya.
-  </p>
-  <ol className="text-muted">
-    <li>
-      <strong>Uji Model Fisik Dinamika Pantai (UF)</strong> → <b>16 Ahli</b>  
-      <br />
-      Layanan ini berfokus pada pengujian perilaku gelombang, arus, dan proses 
-      pantai melalui pendekatan model fisik. Hasil pengujian menjadi dasar 
-      penting dalam perencanaan pembangunan pesisir yang aman, efisien, dan berkelanjutan.
-    </li>
-    <li className="mt-2">
-      <strong>Simulasi Hidro-Oseanografi & Interaksi Air – Struktur (SHI)</strong> → <b>11 Ahli</b>  
-      <br />
-      Tim kami melakukan pemodelan numerik untuk memahami interaksi kompleks 
-      antara air laut, struktur, serta ekosistem. Simulasi ini membantu meminimalkan risiko 
-      serta mendukung desain infrastruktur maritim yang tangguh dan ramah lingkungan.
-    </li>
-    <li className="mt-2">
-      <strong>Mekanika Tanah & Akuisisi Data Lapangan Pesisir (MAD)</strong> → <b>12 Ahli</b>  
-      <br />
-      Layanan ini mencakup pengujian tanah, investigasi geoteknik, hingga pengumpulan 
-      data lapangan yang akurat. Informasi yang diperoleh menjadi landasan kuat 
-      dalam pembangunan pesisir yang stabil, aman, dan berdaya guna.
-    </li>
-  </ol>
+ <h4 className="fw-bold mb-3 section-title fs-4"> {/* INCREASED SECTION TITLE FONT */}
+Layanan Inti Kami: Menggerakkan Masa Depan
+</h4>
+<p className="text-muted fs-5"> {/* INCREASED GENERAL DESCRIPTION FONT */}
+Dengan dukungan para ahli berpengalaman dan fasilitas berstandar tinggi, 
+kami berkomitmen memberikan layanan terbaik untuk mendukung riset, inovasi, 
+serta solusi praktis di bidang kelautan dan pesisir. 
+Setiap layanan dirancang untuk menjawab tantangan nyata sekaligus membuka 
+peluang baru dalam pengembangan ilmu pengetahuan maupun penerapannya.
+</p>
+<ol className="text-muted fs-5"> {/* INCREASED LIST FONT */}
+<li>
+<strong>Uji Model Fisik Dinamika Pantai (UF)</strong> → <b>16 Ahli</b>  
+<br />
+<span className="fs-6"> {/* KEPT DETAILED DESCRIPTION SMALLER FOR HIERARCHY */}
+Layanan ini berfokus pada pengujian perilaku gelombang, arus, dan proses 
+pantai melalui pendekatan model fisik. Hasil pengujian menjadi dasar 
+penting dalam perencanaan pembangunan pesisir yang aman, efisien, dan berkelanjutan.
+</span>
+</li>
+<li className="mt-2">
+<strong>Simulasi Hidro-Oseanografi & Interaksi Air – Struktur (SHI)</strong> → <b>11 Ahli</b>  
+<br />
+<span className="fs-6"> {/* KEPT DETAILED DESCRIPTION SMALLER FOR HIERARCHY */}
+Tim kami melakukan pemodelan numerik untuk memahami interaksi kompleks 
+antara air laut, struktur, serta ekosistem. Simulasi ini membantu meminimalkan risiko 
+serta mendukung desain infrastruktur maritim yang tangguh dan ramah lingkungan.
+</span>
+</li>
+<li className="mt-2">
+<strong>Mekanika Tanah & Akuisisi Data Lapangan Pesisir (MAD)</strong> → <b>12 Ahli</b>  
+<br />
+<span className="fs-6"> {/* KEPT DETAILED DESCRIPTION SMALLER FOR HIERARCHY */}
+Layanan ini mencakup pengujian tanah, investigasi geoteknik, hingga pengumpulan 
+data lapangan yang akurat. Informasi yang diperoleh menjadi landasan kuat 
+dalam pembangunan pesisir yang stabil, aman, dan berdaya guna.
+</span>
+</li>
+</ol>
 </div>
-
         {/* Chart Grid */}
         <div className="row g-4 mb-5 animate__animated animate__fadeInUp">
           {/* Bar Chart */}

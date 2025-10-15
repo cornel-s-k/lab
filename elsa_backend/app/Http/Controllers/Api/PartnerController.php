@@ -15,7 +15,17 @@ class PartnerController extends Controller
     {
         try {
             // Menggunakan scopeOrdered dari Model Partner untuk mengurutkan
-            $partners = Partner::ordered()->get();
+            $partners = Partner::ordered()
+                        ->get()
+                        ->map(function ($partner) {
+                            // Ambil attribute logo_url_full yang sudah dibuat di Model
+                            return [
+                                'name' => $partner->name,
+                                'logo' => $partner->logo_url_full, // Menggunakan accessor baru
+                                'order_index' => $partner->order_index,
+                                // Anda dapat menambahkan kolom lain yang dibutuhkan
+                            ];
+                        });
 
             return response()->json([
                 'success' => true,

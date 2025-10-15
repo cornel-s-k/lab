@@ -1,9 +1,52 @@
-import React from "react";
-import { Link } from "react-router-dom";
+// Anda bisa mengganti nama file ini menjadi HkpDetail.js agar lebih generik
+import React, { useState, useEffect } from "react";
+import { Link, useParams } from "react-router-dom"; // Import useParams
 import Footer from "../home/Footer";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-const HKPLMTADLP = () => {
+const HKPLMTADLP = () => { // Ganti nama fungsi
+  const { code } = useParams(); // Ambil 'code' dari URL (e.g., HKPL-MFDP)
+  const [hkp, setHkp] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchHkpDetail = async () => {
+      try {
+        const API_URL = `http://localhost:8000/api/hkp/HKPL-MTADLP`; // Menggunakan code dari URL
+        const response = await fetch(API_URL);
+
+        if (response.status === 404) {
+             throw new Error("Data HKP tidak ditemukan.");
+        }
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        setHkp(data);
+
+      } catch (e) {
+        console.error("Failed to fetch HKP detail:", e);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchHkpDetail();
+  }, [code]); // Jalankan ulang saat 'code' berubah
+
+  if (isLoading) {
+    return (
+      <div className="bg-white"><div className="container py-5 my-5 text-center">Loading Detail...</div></div>
+    );
+  }
+
+  if (!hkp) {
+    return (
+      <div className="bg-white"><div className="container py-5 my-5 text-center">Detail HKP tidak ditemukan.</div></div>
+    );
+  }
+
   return (
     <div className="bg-white">
       <div className="container py-5 my-5">
@@ -11,8 +54,9 @@ const HKPLMTADLP = () => {
           <h1 className="fw-bold mb-3 text-secondary animate__animated animate__fadeInDown">
             Hak dan Kewajiban Pengguna Layanan
           </h1>
+          {/* Ganti judul dengan data dari API */}
           <h2 className="fw-bold display-5 text-dark animate__animated animate__fadeIn">
-            Mekanika Tanah dan Akuisisi Data Lapangan Pesisir
+            {hkp.title}
           </h2>
           <hr className="w-25 mx-auto border-2 my-4" />
         </div>
@@ -25,13 +69,8 @@ const HKPLMTADLP = () => {
                 <h3 className="card-title fw-bold text-success mb-4">
                   Hak Pengguna Layanan
                 </h3>
-                <ul className="list-group list-group-flush">
-                  <li className="list-group-item bg-transparent border-0 px-0"><b>Mendapatkan Layanan Sesuai Standar</b><br/>Pengguna berhak mendapatkan layanan sesuai dengan spesifikasi dan standar teknis yang telah disepakati, termasuk dalam hal analisis ukuran butiran, pengambilan sampel, dan pengukuran data.</li>
-                  <li className="list-group-item bg-transparent border-0 px-0"><b>Akses Data dan Informasi</b><br/>Pengguna berhak menerima hasil data, laporan, dan dokumentasi dari setiap layanan yang digunakan, seperti hasil pengukuran batimetri, data GPS geodetik, atau pemetaan udara.</li>
-                  <li className="list-group-item bg-transparent border-0 px-0"><b>Jaminan Kerahasiaan Data</b><br/>Pengguna berhak atas kerahasiaan semua data dan informasi yang diberikan atau diperoleh selama proses layanan.</li>
-                  <li className="list-group-item bg-transparent border-0 px-0"><b>Pelayanan yang Profesional</b><br/>Pengguna berhak mendapatkan pelayanan yang profesional, transparan, dan tepat waktu dari penyedia layanan.</li>
-                  <li className="list-group-item bg-transparent border-0 px-0"><b>Pengajuan Keluhan dan Umpan Balik</b><br/>Pengguna berhak menyampaikan keluhan, saran, atau umpan balik terkait kualitas layanan yang diterima.</li>
-                </ul>
+                {/* ⚠️ Gunakan dangerouslySetInnerHTML untuk merender RichEditor content */}
+                <div dangerouslySetInnerHTML={{ __html: hkp.hak_content }} /> 
               </div>
             </div>
           </div>
@@ -43,13 +82,8 @@ const HKPLMTADLP = () => {
                 <h3 className="card-title fw-bold text-danger mb-4">
                   Kewajiban Pengguna Layanan
                 </h3>
-                <ul className="list-group list-group-flush">
-                  <li className="list-group-item bg-transparent border-0 px-0"><b>Memberikan Informasi Akurat</b><br/>Pengguna wajib memberikan informasi yang lengkap dan akurat mengenai lokasi survei, tujuan proyek, dan kebutuhan spesifik lainnya agar layanan dapat dilaksanakan dengan tepat.</li>
-                  <li className="list-group-item bg-transparent border-0 px-0"><b>Menyediakan Akses Lokasi</b><br/>Pengguna wajib memfasilitasi dan memastikan akses ke lokasi survei atau pengambilan sampel, baik untuk layanan survei topografi, hidrografi, maupun pengambilan sampel beton atau sedimen.</li>
-                  <li className="list-group-item bg-transparent border-0 px-0"><b>Mematuhi Prosedur dan Aturan</b><br/>Pengguna wajib mematuhi semua prosedur, standar keselamatan, dan aturan yang ditetapkan oleh penyedia layanan, terutama saat berada di lapangan.</li>
-                  <li className="list-group-item bg-transparent border-0 px-0"><b>Melakukan Pembayaran Tepat Waktu</b><br/>Pengguna wajib menyelesaikan pembayaran sesuai dengan kesepakatan dan jadwal yang telah ditetapkan.</li>
-                  <li className="list-group-item bg-transparent border-0 px-0"><b>Menggunakan Hasil Layanan Sesuai Peruntukan</b><br/>Pengguna bertanggung jawab untuk menggunakan data dan hasil layanan sesuai dengan tujuan yang disepakati dan tidak menyalahgunakannya.</li>
-                </ul>
+                {/* ⚠️ Gunakan dangerouslySetInnerHTML untuk merender RichEditor content */}
+                <div dangerouslySetInnerHTML={{ __html: hkp.kewajiban_content }} />
               </div>
             </div>
           </div>
@@ -66,5 +100,4 @@ const HKPLMTADLP = () => {
     </div>
   );
 };
-
 export default HKPLMTADLP;

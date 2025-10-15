@@ -1,43 +1,53 @@
 // src/components/home/HKPSection.js
-
-import React from "react";
+// src/components/home/HKPSection.js
+import React, { useState, useEffect } from "react"; 
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Link } from "react-router-dom";
-// Import your images here
-import hkp1 from "../../assets/home/mfdp.png";
-import hkp2 from "../../assets/home/SHIAS.jpeg";
-import hkp3 from "../../assets/home/mtallp.png";
+
+// Hapus import gambar yang hardcoded:
+// import hkp1 from "../../assets/home/mfdp.png";
+// import hkp2 from "../../assets/home/shiass.jpeg";
+// import hkp3 from "../../assets/home/mtalpp.png";
 
 const HKPSection = () => {
-  const hkpData = [
-    {
-      code: "HKPL-MFDP",
-      title:
-        "Hak dan Kewajiban Pengguna Layanan Model Fisik Dinamika Pantai",
-      image: hkp1,
-      // 1. Tambahkan '/hkp' ke link
-      link: "/hkp/HKPL-MFDP", 
-    },
-    {
-      code: "HKPL-SHIAS",
-      title:
-        "Hak dan Kewajiban Pengguna Layanan Simulasi Hidro-Oseanografi & Interaksi Air - Struktur",
-      image: hkp2,
-      // 2. Tambahkan '/hkp' ke link
-      link: "/hkp/HKPL-SHIAS", 
-    },
-    {
-      code: "HKPL-MTADLP",
-      title:
-        "Hak dan Kewajiban Pengguna Layanan Mekanika Tanah dan Akuisisi Data Lapangan Pesisir",
-      image: hkp3,
-      // 3. Tambahkan '/hkp' ke link
-      link: "/hkp/HKPL-MTADLP", 
-    },
-  ];
+  const [hkpData, setHkpData] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchHkps = async () => {
+      try {
+        // Ganti dengan URL API yang benar
+        const API_URL = "http://localhost:8000/api/hkp"; 
+        const response = await fetch(API_URL);
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        // Data dari API sudah memiliki format {code, title, image: url, link}
+        setHkpData(data); 
+
+      } catch (e) {
+        console.error("Failed to fetch HKP data:", e);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchHkps();
+  }, []);
+
+  if (isLoading) {
+    return <section id="hkp-section" className="py-5 bg-light"><div className="container text-center">Loading...</div></section>;
+  }
 
   return (
-    <section id="hkp-section" className="py-5 bg-light">
+    <section 
+      id="hkp-section" 
+      className="py-5 bg-light about-section pb-5 bg-light" // Removed duplicate `className` and `style` for clarity
+      style={{ paddingTop: "110px" }} // Keeping inline style for specific padding
+    >
       <div className="container">
         {/* Judul Section */}
         <div className="text-center mb-5">
@@ -59,7 +69,7 @@ const HKPSection = () => {
             >
               <div className="card h-100 shadow-lg rounded-4 overflow-hidden border-0 position-relative card-hover">
                 {/* Gambar dengan overlay */}
-                <div className="position-relative">
+                <div className="position-relative card-img-container"> {/* Added new class for image container */}
                   <img
                     src={item.image}
                     className="card-img-top img-fluid"
@@ -76,7 +86,7 @@ const HKPSection = () => {
                     {item.title}
                   </p>
                  <Link to={item.link} className="btn mt-auto details-btn">
-                            Details
+                      Details
                    </Link>
                 </div>
               </div>
@@ -138,6 +148,19 @@ const HKPSection = () => {
           box-shadow: 0px 8px 25px rgba(0, 0, 0, 0.2);
         }
 
+        /* NEW CSS FOR IMAGE SHAPE */
+        .card-img-container {
+          height: 250px; /* Set a fixed height for the image container */
+          overflow: hidden; /* Hide overflowing parts of the image */
+        }
+
+        .card-img-top {
+          width: 100%;
+          height: 100%; /* Make the image fill the container's height */
+          object-fit: cover; /* Crop if necessary to cover the area */
+          object-position: center; /* Center the image within its container */
+        }
+        
         /* Overlay di gambar */
         .card-overlay {
           position: absolute;

@@ -1,7 +1,20 @@
-.node {
-  border-radius: 8px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+/* src/components/about/OrgChart.css */
+
+/* Hilangkan toolbar bawaan library */
+.org-chart-toolbar,
+.org-chart-controls {
+  display: none !important;
 }
-.node rect {
-  fill: #1e3a8a;
+
+/* Responsif agar grafis tidak keluar area */
+.org-chart-container {
+  width: 100% !important;
+  height: auto !important;
+  overflow: hidden !important;
+}
+
+/* Pastikan SVG fit dengan container */
+svg {
+  max-width: 100%;
+  height: auto;
 }

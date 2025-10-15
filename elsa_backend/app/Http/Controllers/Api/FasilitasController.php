@@ -12,22 +12,29 @@ class FasilitasController extends Controller
      */
     public function index()
     {
-        // Mengambil semua data Fasilitas, diurutkan dari yang terbaru dibuat (atau berdasarkan ID)
-        // Jika Anda hanya ingin judul dan deskripsi singkat, Anda bisa menggunakan select():
-        // return response()->json(Fasilitas::latest()->select('id', 'judul', 'deskripsi_singkat', 'gambar')->get());
+        // Ambil data dan tampilkan URL gambar lengkap
+        $fasilitas = Fasilitas::latest()->get(['id', 'judul', 'deskripsi_singkat', 'gambar']);
         
-        return response()->json(Fasilitas::latest()->get());
+        // Mapping untuk menyertakan 'gambar_url' yang dibuat di Model
+        $formattedFasilitas = $fasilitas->map(function ($fasil) {
+            return [
+                'id' => $fasil->id,
+                'title' => $fasil->judul, // Di frontend namanya 'title'
+                'deskripsi_singkat' => $fasil->deskripsi_singkat,
+                'image' => $fasil->gambar_url, // Di frontend namanya 'image'
+                'link' => '/fasilitas/' . $fasil->id, // Tautkan ke halaman detail
+            ];
+        });
+        
+        return response()->json($formattedFasilitas);
     }
 
-    /**
-     * Mengambil detail satu fasilitas berdasarkan ID.
-     * Digunakan untuk halaman FasilitasDetail1, FasilitasDetail2, dll.
-     */
     public function show($id)
     {
-        // Mencari Fasilitas berdasarkan ID, atau gagal (404) jika tidak ditemukan
+        // Model sudah memiliki accessor 'gambar_url' karena sudah di $appends
         $fasilitas = Fasilitas::findOrFail($id);
         
-        return response()->json($fasilitas);
+        // Data yang dikembalikan akan otomatis menyertakan 'gambar_url'
+        return response()->json($fasilitas); 
     }
 }

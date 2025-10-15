@@ -1,86 +1,67 @@
-import React from "react";
+import React, { useState, useEffect } from "react"; // Tambahkan useEffect
 import Header from "../home/Header";
 import Footer from "../home/Footer";
 import { Link } from "react-router-dom";
 
+// Data faqData hardcoded dihapus
+
 const FAQ = () => {
-  const faqData = [
-    {
-      id: "faq1",
-      question: "Apa saja jenis layanan pengujian yang tersedia di laboratorium ini?",
-      answer: "Kami menyediakan layanan pengujian antara lain: pengujian model fisik dinamika dan bangunan pantai (gelombang, pasang surut, arus, tsunami, tekanan, breakwater, revetment, jetty, dsb), pengujian simulasi hidro-oseanografi dan interaksi air-struktur (pemodelan gelombang, pola sebaran panas, pola sebaran sedimen, dsb), dan pengujian mekanika tanah dan akuisisi data pesisir (pengujian kadar air, berat janis, ukuran butiran tanah; pengukuran batimetri dan topografi; pengambilan sampel coredrill, pengukuran pasang surut, dan profil arus laut, dsb).",
-    },
-    {
-      id: "faq2",
-      question: "Apakah pengujian di laboratorium bisa dilakukan berdasarkan permintaan proyek tertentu (customized testing)?",
-      answer: "Ya, kami melayani pengujian berdasarkan spesifikasi teknis dari proyek atau kebutuhan unik pengguna.",
-    },
-    {
-      id: "faq3",
-      question: "Siapa saja yang dapat menggunakan layanan laboratorium ini?",
-      answer: "Layanan kami terbuka untuk: Instansi pemerintah, Konsultan teknik, Perusahaan swasta, Perguruan tinggi dan lembaga riset, dan Mahasiswa untuk kegiatan tugas akhir.",
-    },
-    {
-      id: "faq4",
-      question: "Bagaimana prosedur permohonan layanan pengujian?",
-      answer: "Permohonan layanan pengujian dapat diakses melalui website Layanan Sains BRIN >> elsa.brin.go.id",
-    },
-    {
-      id: "faq5",
-      question: "Berapa lama waktu yang dibutuhkan untuk satu proyek pengujian?",
-      answer: "Durasi pengujian bervariasi tergantung pada kompleksitas objek uji atau skenario uji dari masing-masing layanan.",
-    },
-    {
-      id: "faq6",
-      question: "Berapa biaya layanan pengujian?",
-      answer: "Besar nominal layanan tergantung pada fasilitas yang dipakai dan lama penggunaannya. Sebagai referensi dapat dilihat PMK RI No.129 /PMK.02/2022.",
-    },
-    {
-      id: "faq7",
-      question: "Apakah pengguna dapat terlibat langsung selama pengujian berlangsung?",
-      answer: "Ya, kami menganjurkan kolaborasi aktif dengan pengguna jasa untuk memastikan pengujian berjalan sesuai tujuan teknis. Kunjungan ke laboratorium dapat dijadwalkan sesuai ketentuan yang berlaku.",
-    },
-    {
-      id: "faq8",
-      question: "Apakah laboratorium menerima magang atau program kerja praktik mahasiswa?",
-      answer: "Ya. Kami menerima mahasiswa magang dengan durasi 1–6 bulan, sesuai kesepakatan dan ketersediaan pembimbing teknis. Pendaftaran dilakukan secara resmi melalui institusi asal dan diajukan melalui elsa.brin.go.id.",
-    },
-    {
-      id: "faq9",
-      question: "Bagaimana cara menghubungi laboratorium untuk informasi lebih lanjut?",
-      answer: "Silakan hubungi kami melalui: Telepon / WA: 0813-2959-9897 dan Lokasi: BRIN Kawasan Mlati, Jl. Grafika Sekip No.2, Sendowo, Sinduadi, Kec. Mlati, Kabupaten Sleman, Daerah Istimewa Yogyakarta 55284.",
-    },
-    {
-      id: "faq10",
-      question: "Bagaimana jika terjadi kerusakan alat atau gangguan saat pengujian?",
-      answer: "Jika terjadi kendala teknis selama pengujian, laboratorium akan segera menginformasikan pengguna dan menjadwalkan ulang (tanpa biaya tambahan, jika kesalahan berasal dari pihak laboratorium). Apabila kerusakan disebabkan oleh kesalahan pengguna, akan dikenakan kompensasi sesuai ketentuan.",
-    },
-    {
-      id: "faq11",
-      question: "Apakah laboratorium menerima kerja sama jangka panjang atau proyek multi-tahun?",
-      answer: "Ya. Kami membuka peluang kerja sama riset atau proyek teknis jangka panjang, baik dalam bentuk kontrak kerja, MoU, atau nota kesepahaman.",
-    },
-    {
-      id: "faq12",
-      question: "Bagaimana jika pengguna membutuhkan data mentah (raw data)?",
-      answer: "Data mentah (raw data) dapat disediakan melalui RIN (Repositiry Ilmiah Nasional). Namun, data tersebut hanya disampaikan setelah proses verifikasi dan pencatatan internal selesai.",
-    },
-    {
-      id: "faq13",
-      question: "Apakah jadwal pengujian dapat berubah setelah disepakati?",
-      answer: "Jadwal bisa berubah karena beberapa faktor seperti: Gangguan teknis, Perawatan alat, Proyek sebelumnya mengalami perpanjangan. Jika terjadi perubahan, pengguna akan diberi pemberitahuan minimal 3 hari kerja sebelumnya.",
-    },
-    {
-      id: "faq14",
-      question: "Apakah hasil pengujian dapat dirahasiakan?",
-      answer: "Ya. Kerahasiaan data dan hasil pengujian dapat dijamin melalui perjanjian tertulis, khususnya untuk proyek-proyek sensitif atau bersifat komersial.",
-    },
-    {
-      id: "faq15",
-      question: "Bagaimana jika hasil pengujian berbeda dengan ekspektasi pengguna?",
-      answer: "Hasil pengujian bersifat objektif dan berdasarkan pengamatan atau pengukuran langsung. Jika terjadi ketidaksesuaian, pengguna dapat mengajukan klarifikasi secara tertulis, dan laboratorium akan memberi penjelasan teknis. Pengulangan pengujian dimungkinkan dengan perjanjian tambahan.",
-    },
-  ];
+  const [faqData, setFaqData] = useState([]); // State untuk menyimpan data FAQ dari API
+  const [loading, setLoading] = useState(true);
+  const API_URL = "http://localhost:8000/api/faq"; // Ganti dengan URL API Anda!
+
+  useEffect(() => {
+    const fetchFaq = async () => {
+      try {
+        const response = await fetch(API_URL);
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const result = await response.json();
+
+        if (result.success && result.data) {
+          setFaqData(result.data);
+        }
+      } catch (error) {
+        console.error("Gagal mengambil data FAQ:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchFaq();
+  }, []);
+
+  // Tampilan Loading
+  if (loading) {
+    return (
+        <div className="bg-white">
+          <Header />
+          <div className="container py-5 text-center mt-5 mb-5">
+              <h1 className="fw-bold mb-3 text-secondary">FAQ</h1>
+              <p className="lead text-muted">Memuat pertanyaan dan jawaban...</p>
+          </div>
+          <Footer />
+        </div>
+    );
+  }
+
+  // Tampilan ketika tidak ada data
+  if (faqData.length === 0) {
+    return (
+        <div className="bg-white">
+          <Header />
+          <div className="container py-5 text-center mt-5 mb-5">
+              <h1 className="fw-bold mb-3 text-secondary">FAQ</h1>
+              <p className="lead text-danger">Tidak ada FAQ yang tersedia saat ini.</p>
+          </div>
+          <Footer />
+        </div>
+    );
+  }
+
 
   return (
     <div className="bg-white">
@@ -99,7 +80,8 @@ const FAQ = () => {
         <div className="accordion" id="faqAccordion">
           {faqData.map((item, index) => (
             <div
-              key={item.id}
+              // Menggunakan item.id dari database sebagai key (Wajib ada)
+              key={item.id} 
               className="accordion-item shadow-sm mb-3 faq-item animate__animated animate__fadeInUp"
               style={{ animationDelay: `${index * 0.1}s` }}
             >
@@ -108,21 +90,25 @@ const FAQ = () => {
                   className="accordion-button collapsed fw-bold faq-button"
                   type="button"
                   data-bs-toggle="collapse"
+                  // Menggunakan item.id dari database
                   data-bs-target={`#collapse${item.id}`}
                   aria-expanded="false"
                   aria-controls={`collapse${item.id}`}
                 >
-                  {item.question}
+                  {/* Menggunakan nama kolom dari database: pertanyaan */}
+                  {item.pertanyaan} 
                 </button>
               </h2>
               <div
-                id={`collapse${item.id}`}
+                // Menggunakan item.id dari database
+                id={`collapse${item.id}`} 
                 className="accordion-collapse collapse"
                 aria-labelledby={`heading${item.id}`}
                 data-bs-parent="#faqAccordion"
               >
                 <div className="accordion-body text-muted faq-answer">
-                  {item.answer}
+                  {/* Menggunakan nama kolom dari database: jawaban */}
+                  {item.jawaban}
                 </div>
               </div>
             </div>
@@ -130,7 +116,7 @@ const FAQ = () => {
         </div>
       </div>
       <Footer />
-      {/* Custom CSS untuk tampilan lebih menarik */}
+      {/* Custom CSS untuk tampilan lebih menarik (tetap dipertahankan) */}
       <style jsx>{`
         .faq-item {
           border: 1px solid #e0e0e0;

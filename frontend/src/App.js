@@ -23,10 +23,9 @@ import TimelineLayanan from "./components/home/TimelineLayanan";
 import About from "./components/about/about";
 
 // Halaman Fasilitas Detail
-// import FasilitasDetail1 from "./components/fasilitas/FasilitasDetail1";
-// import FasilitasDetail2 from "./components/fasilitas/FasilitasDetail2";
-// import FasilitasDetail3 from "./components/fasilitas/FasilitasDetail3";
-import FasilitasDetail from "./components/fasilitas/FasilitasDetail";
+import FasilitasDetail1 from "./components/fasilitas/FasilitasDetail1";
+import FasilitasDetail2 from "./components/fasilitas/FasilitasDetail2";
+import FasilitasDetail3 from "./components/fasilitas/FasilitasDetail3";
 import HKPLMFDP from "./components/hkp/HKPLMFDP";
 import HKPLSHIAS from "./components/hkp/HKPLSHIAS";
 import HKPLMTADLP from "./components/hkp/HKPLMTADLP";
@@ -34,6 +33,9 @@ import FAQ from "./components/faq/FAQ";
 import Survey from "./components/survey/survey";
 import Timeline from "./components/timeline/timeline";
 import SDM from "./components/SDM/sdm";
+
+import BeritaList from './components/berita/BeritaList';    // Sesuaikan path jika berbeda
+import BeritaDetail from './components/berita/BeritaDetail'; // Sesuaikan path jika berbeda
 
 // 🔹 Halaman utama (HomePage)
 function HomePage() {
@@ -74,19 +76,14 @@ function App() {
         {/* halaman faq */}
         <Route path="/faq" element={<FAQ />} />
 
-        {/* halaman survey */}
-        <Route path="/survey" element={<Survey />} />
-
         <Route path="/timeline" element={<Timeline />} />
 
         <Route path="/sdm" element={<SDM />} />
 
-        {/* Halaman Detail Fasilitas
+        {/* Halaman Detail Fasilitas */}
         <Route path="/fasilitas/1" element={<FasilitasDetail1 />} />
         <Route path="/fasilitas/2" element={<FasilitasDetail2 />} />
-        <Route path="/fasilitas/3" element={<FasilitasDetail3 />} /> */}
-
-         <Route path="/fasilitas/:id" element={<FasilitasDetail />} /> 
+        <Route path="/fasilitas/3" element={<FasilitasDetail3 />} />
 
         {/* Halaman Detail HKP */}
         <Route path="/hkp/HKPL-MFDP" element={<HKPLMFDP />} />
@@ -94,6 +91,9 @@ function App() {
         <Route path="/hkp/HKPL-MTADLP" element={< HKPLMTADLP />} />
 
         <Route path="/timeline" element={<Timeline />} />
+         {/* 🎯 RUTE BARU UNTUK BERITA: */}
+    <Route path="/berita" element={<BeritaList />} />          {/* Tampilan Daftar Berita */}
+    <Route path="/berita/:id" element={<BeritaDetail />} /> 
 
       </Routes>
     </Router>

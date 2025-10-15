@@ -9,13 +9,13 @@ import "../../Custom.css";
 
 const Header = () => {
   return (
-    <header>
+     <header className="fixed-top">
     {/* //  <header className="fixed-top">  */}
       <nav className="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
         <div className="container">
           {/* Logo */}
           <Link className="navbar-brand d-flex align-items-center" to="/">
-            <img src={logo} style={{ height: "80px" }} alt="Logo" />
+            <img src={logo} style={{ height: "60px" }} alt="Logo" />
           </Link>
 
           {/* Hamburger Button */}
@@ -59,15 +59,10 @@ const Header = () => {
                   HKP
                 </a>
               <li className="nav-item">
-  <a
-    className="nav-link"
-    href="https://forms.gle/DEn7BPxiEmgkgnY29"
-    target="_blank"
-    rel="noopener noreferrer"
-  >
-    Survey
-  </a>
-</li>
+             <Link className="nav-link" to="/berita">
+             berita
+             </Link>
+             </li>
               <li className="nav-item">
                 <Link className="nav-link" to="/faq">
                   FAQ

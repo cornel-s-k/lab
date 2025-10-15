@@ -1,18 +1,64 @@
-import React from "react";
-import ITK from "../../assets/home/itk.jpg";
-
-const partners = [
-  { logo: "https://integrasi.djpt.kkp.go.id/pud/assets/portal/img/material-logo-2021.png", name: "Mitra 1" },
-  { logo: "https://www.sig.id/storage/downloads/logo-sig/sig-latar-putih.png", name: "Mitra 2" },
-  { logo: "https://portal.dephub.go.id/themes/new2020/assets/images/logo-large.png", name: "Mitra 3" },
-  { logo: "https://mm.feb.undip.ac.id/wp-content/uploads/2021/11/universitas-diponegoro-logo.png", name: "Mitra 4" },
-  { logo: ITK, name: "Mitra 5" },
-  { logo: "https://lpkm.psikologi.ugm.ac.id/wp-content/uploads/2016/05/cropped-logo-ugm.png", name: "Mitra 6" },
-];
+import React, { useState, useEffect } from "react";
+// Import ITK tidak lagi diperlukan jika semua data dari API
+// import ITK from "../../assets/home/itk.jpg"; 
 
 const MitraKerjasama = () => {
+  const [partners, setPartners] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const API_URL = 'http://localhost:8000/api/partners'; // Ganti dengan URL API Anda
+
+  useEffect(() => {
+    const fetchPartners = async () => {
+      try {
+        const response = await fetch(API_URL); // Melakukan fetch ke API Laravel
+        
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        
+        const result = await response.json(); // Mengubah response menjadi JSON
+        
+        if (result.success && result.data) {
+          setPartners(result.data); // Menyimpan data mitra ke state
+        }
+        
+      } catch (error) {
+        console.error("Gagal mengambil data mitra kerjasama:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchPartners();
+  }, []); // useEffect hanya dijalankan sekali setelah render pertama
+
+  // Jika masih loading atau tidak ada data, tampilkan pesan
+  if (loading) {
+      return (
+          <section className="py-5 text-center bg-light">
+              <div className="container">
+                  <h2 className="fw-bold mb-4 text-dark">Mitra Kerjasama</h2>
+                  <p>Memuat data...</p>
+              </div>
+          </section>
+      );
+  }
+
+  if (partners.length === 0) {
+      return (
+          <section className="py-5 text-center bg-light">
+              <div className="container">
+                  <h2 className="fw-bold mb-4 text-dark">Mitra Kerjasama</h2>
+                  <p>Tidak ada mitra kerjasama yang tersedia.</p>
+              </div>
+          </section>
+      );
+  }
+
+  // Menggunakan data dari API untuk tampilan slider
   return (
     <section className="py-5 text-center bg-light">
+      {/* ... (Style CSS tetap sama) ... */}
       <style>{`
         .slider {
           overflow: hidden;
@@ -21,8 +67,14 @@ const MitraKerjasama = () => {
         }
         .slider-track {
           display: flex;
-          width: calc(200%);
-          animation: scroll 25s linear infinite;
+          /* Lebar slider track dihitung dua kali lipat dari jumlah mitra untuk efek loop */
+          width: calc(200% * ${partners.length}); 
+          
+          /* >>> PERUBAHAN UTAMA DI SINI <<< */
+          /* Durasi diubah menjadi 60s (lebih lambat) */
+          /* 'linear' untuk kecepatan konstan */
+          /* 'infinite' untuk pengulangan terus menerus (sudah ada) */
+          animation: scroll 150s linear infinite; 
         }
         .slide {
           flex: 0 0 auto;
@@ -34,21 +86,22 @@ const MitraKerjasama = () => {
         }
         .slide img {
           max-width: 100%;
-          /* Set a fixed height and width to standardize the size */
           height: 80px; 
           width: auto; 
-          object-fit: contain; /* Ensures the image fits within the bounds without stretching */
-          transition: transform 0.3s;
+          object-fit: contain; 
+          /* Transisi hover diperlambat */
+          transition: transform 0.5s; 
         }
         .slide img:hover {
-          transform: scale(1.1);
+          transform: scale(1.2); /* Efek zoom diperbesar sedikit */
         }
         @keyframes scroll {
           0% {
             transform: translateX(0);
           }
           100% {
-            transform: translateX(-50%);
+            /* Nilai -50% ini penting untuk looping mulus */
+            transform: translateX(-50%); 
           }
         }
       `}</style>
@@ -57,10 +110,11 @@ const MitraKerjasama = () => {
         <h2 className="fw-bold mb-4 text-dark">Mitra Kerjasama</h2>
         <div className="slider">
           <div className="slider-track">
+            {/* Gandakan array partners untuk efek slider tak terbatas */}
             {partners.concat(partners).map((partner, idx) => (
               <div className="slide" key={idx}>
                 <img
-                  src={partner.logo}
+                  src={partner.logo} // Menggunakan data 'logo' dari API
                   alt={partner.name}
                   className="img-fluid"
                 />

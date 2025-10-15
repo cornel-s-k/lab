@@ -20,9 +20,12 @@ const TimelineLayanan = () => {
                 penyelesaian. Untuk informasi lebih lengkap, silakan tekan tombol
                 Lihat Detail.
               </p>
-<Link to="/timeline" className="btn btn-light rounded-3 fw-bold shadow-sm">
-  Lihat Timeline
-</Link>
+              <button
+  className="btn btn-light rounded-3 fw-bold shadow-sm"
+  onClick={() => window.location.href = "https://sites.google.com/view/layanandinamikapesisir/daftar-penggunaan-fasilitas?authuser=0"}
+>
+  Lihat Detail
+</button>
 
             </div>
           </div>

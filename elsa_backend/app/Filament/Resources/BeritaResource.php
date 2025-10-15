@@ -9,6 +9,8 @@ use Filament\Forms;
 use Filament\Forms\Components\Card; // Recommended for grouping fields visually
 use Filament\Forms\Components\TextInput; // Import for the 'judul' field
 use Filament\Forms\Components\Textarea; // Import for the 'isi' or 'content' field
+use Filament\Forms\Components\RichEditor;
+use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -34,12 +36,23 @@ class BeritaResource extends Resource
                             ->maxLength(255)
                             ->label('Judul Berita'),
 
-                        // OPTIONAL: Another field that might be required, e.g., 'isi' (content)
-                        Textarea::make('isi')
-                            ->required() // Set as required if your 'isi' column is NOT NULL
-                            ->rows(10)
+                         RichEditor::make('isi') // Sesuaikan dengan kolom DB 'isi'
+                            ->required()
                             ->columnSpanFull()
-                            ->label('Isi Berita'),
+                            ->label('Isi Berita')
+                            ->fileAttachmentsDisk('public') // Disk tempat menyimpan gambar di editor
+                            ->fileAttachmentsDirectory('berita-content-images') // Folder untuk gambar di dalam konten
+                            ->fileAttachmentsVisibility('public'),
+
+                        // 3. Gambar Utama Berita (Menggunakan FileUpload)
+                        FileUpload::make('gambar') // Sesuaikan dengan kolom DB 'gambar'
+                            ->label('Gambar Utama')
+                            ->disk('public') // Disk untuk gambar utama
+                            ->directory('berita-images') // Folder untuk gambar utama
+                            ->visibility('public')
+                            ->image() // Hanya menerima file gambar
+                            ->imageEditor() // Tambahkan fitur editor gambar
+                            ->nullable(), // Set menjadi nullable (sesuai DB migration)
                     ])
                     ->columns(1), // Use one column for this Card
             ]);

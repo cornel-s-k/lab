@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react"; // Tambahkan useEffect di sini
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faChevronLeft,
@@ -7,49 +7,66 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import "../../Custom.css"; // Import CSS custom
 
-const timelineData = [
-  {
-    year: "1982",
-    description:
-      "Laboratorium Teknik Pantai (LTP) didirikan oleh Dirjen Perhubungan Laut",
-    type: "highlight",
-  },
-  {
-    year: "1987",
-    description:
-      "Di Era BJ Habibie LTP dialihkan ke BPPT menjadi Laboratorium Pengkajian Teknik Pantai (LPTP)",
-    type: "normal",
-  },
-  {
-    year: "2001",
-    description:
-      "SK Ka BPPT 170/Kp/KA/BPT/IV/2006, LTP berubah menjadi Balai Pengkajian Dinamika Pantai (BPDP)",
-    type: "highlight",
-  },
-  {
-    year: "2015",
-    description:
-      "Perka BPPT no 25 Tahun 2015 berubah menjadi Balai Teknologi Infrastruktur Pelabuhan dan Dinamika Pantai (BTIPDP)",
-    type: "normal",
-  },
-  {
-    year: "2022",
-    description:
-      "Transformasi reorganisasi ke BRIN berganti menjadi Laboratorium Pantai dan Dinamika Pantai (LPDP)",
-    type: "highlight",
-  },
-];
-
 const HistoryTimeline = () => {
+  // 1. STATE BARU: timelineData sekarang kosong (akan diisi dari API)
+  const [timelineData, setTimelineData] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [currentIndex, setCurrentIndex] = useState(0);
 
+  // GANTI DENGAN URL API LARAVEL ANDA! (Pastikan port dan domain sudah benar)
+  const API_URL = 'http://localhost:8000/api/history'; 
+
+  // 2. HOOK useEffect UNTUK FETCH DATA
+  useEffect(() => {
+    const fetchHistory = async () => {
+      try {
+        const response = await fetch(API_URL);
+        
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        
+        const result = await response.json();
+        
+        if (result.success && result.data) {
+          // Mapping data dari backend agar sesuai dengan format yang diharapkan frontend
+          const formattedData = result.data.map(item => ({
+            year: item.year,
+            description: item.description,
+            // Mengubah is_highlight (boolean dari DB) menjadi type ('highlight'/'normal')
+            type: item.is_highlight ? 'highlight' : 'normal', 
+          }));
+          
+          setTimelineData(formattedData); // Update state dengan data API
+        }
+        
+      } catch (error) {
+        console.error("Gagal mengambil data sejarah:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchHistory();
+  }, []); // Array kosong memastikan ini hanya berjalan saat komponen mounting
+
+  // Reset index saat data timeline berubah (penting agar currentIndex tidak out of bounds)
+  useEffect(() => {
+      if (timelineData.length > 0) {
+          setCurrentIndex(0);
+      }
+  }, [timelineData]);
+
+  // Fungsi navigasi diubah agar bekerja dengan data dinamis (ditambahkan safety check)
   const handlePrev = () => {
+    if (timelineData.length === 0) return;
     setCurrentIndex((prevIndex) =>
       prevIndex === 0 ? timelineData.length - 1 : prevIndex - 1
     );
   };
 
   const handleNext = () => {
+    if (timelineData.length === 0) return;
     setCurrentIndex((prevIndex) =>
       prevIndex === timelineData.length - 1 ? 0 : prevIndex + 1
     );
@@ -57,6 +74,30 @@ const HistoryTimeline = () => {
 
   const currentItem = timelineData[currentIndex];
 
+  // 3. TAMPILAN LOADING / EMPTY STATE
+  if (loading) {
+    return (
+        <section className="timeline-section py-5">
+            <div className="container">
+                <h2 className="text-center fw-bold mb-5 sejarah-title">Sejarah</h2>
+                <p className="text-center">Memuat data sejarah...</p>
+            </div>
+        </section>
+    );
+  }
+
+  if (timelineData.length === 0) {
+      return (
+          <section className="timeline-section py-5">
+              <div className="container">
+                  <h2 className="text-center fw-bold mb-5 sejarah-title">Sejarah</h2>
+                  <p className="text-center">Tidak ada data sejarah yang tersedia. Mohon masukkan data melalui panel Admin.</p>
+              </div>
+          </section>
+      );
+  }
+
+  // 4. TAMPILAN NORMAL (menggunakan currentItem dari API)
   return (
     <section className="timeline-section py-5">
       <div className="container">

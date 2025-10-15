@@ -14,10 +14,23 @@ class HkpController extends Controller
      * @return JsonResponse
      */
     public function index(): JsonResponse
-    {
+     {
         // Ambil data ringkasan untuk card di homepage
         $hkps = Hkp::latest()->get(['id', 'code', 'title', 'image']);
-        return response()->json($hkps, 200);
+        
+        // Mapping untuk menyertakan image_url
+        $formattedHkps = $hkps->map(function ($hkp) {
+            return [
+                'code' => $hkp->code,
+                'title' => $hkp->title,
+                // Gunakan accessor image_url yang sudah dibuat di Model
+                'image' => $hkp->image_url, 
+                // Tambahkan link agar frontend tidak perlu membuat path sendiri
+                'link' => '/hkp/' . $hkp->code,
+            ];
+        });
+        
+        return response()->json($formattedHkps, 200); // KEMBALIKAN DATA YANG DIMAPPING
     }
 
     /**

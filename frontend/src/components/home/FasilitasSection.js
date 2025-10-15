@@ -1,41 +1,42 @@
-// file: FasilitasSection.js
-import React, { useState, useEffect } from "react";
+// FasilitasSection.js
+import React from "react";
 import { Link } from "react-router-dom";
-import axios from "axios"; // Import axios
 import "bootstrap/dist/css/bootstrap.min.css";
-
-// Pastikan URL ini sesuai dengan lokasi server Laravel Anda
-const API_URL = "http://localhost:8000/api/fasilitas"; 
+import fasilitas1 from "../../assets/home/fasil1.jpeg";
+import fasilitas2 from "../../assets/home/fasil2.jpeg";
+import fasilitas3 from "../../assets/home/fasil3.jpeg";
 
 const FasilitasSection = () => {
-  const [fasilitasList, setFasilitasList] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState(null);
-
-  useEffect(() => {
-    // Fungsi untuk mengambil data dari Laravel API
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(API_URL);
-        // Kita akses response.data.data karena menggunakan FasilitasResource::collection di Laravel
-        setFasilitasList(response.data.data); 
-        setIsLoading(false);
-      } catch (err) {
-        // Handle error seperti CORS, server down, dll.
-        console.error("Gagal memuat data Fasilitas:", err);
-        setError("Gagal memuat data Fasilitas dari server.");
-        setIsLoading(false);
-      }
-    };
-
-    fetchData();
-  }, []); // [] agar hanya dijalankan sekali saat komponen di-mount
-
-  if (isLoading) return <p className="text-center py-5">Memuat Fasilitas...</p>;
-  if (error) return <p className="text-center py-5 text-danger">Terjadi kesalahan: {error}</p>;
+  // Data fasilitas dalam array
+  const fasilitasList = [
+    {
+      id: 1,
+      title: "Uji Model Fisik Dinamika Pantai",
+      image: fasilitas1,
+      status: "Available",
+      link: "/fasilitas/1",
+    },
+    {
+      id: 2,
+      title: "Simulasi Hidro-Oseanografi & Interaksi Air Struktur",
+      image: fasilitas2,
+      status: "Available",
+      link: "/fasilitas/2",
+    },
+    {
+      id: 3,
+      title: "Mekanika Tanah dan Akuisisi Data Lapangan Pesisir",
+      image: fasilitas3,
+      status: "Available",
+      link: "/fasilitas/3",
+    },
+  ];
 
   return (
-    <section id="fasilitas-section" className="bg-white py-5">
+    // Add the id="fasilitas-section" here
+    <section id="fasilitas-section" className="bg-white py-5"
+    style={{ paddingTop: "110px" }} 
+ className="about-section pb-5 bg-light">
       <div className="container">
         {/* Judul */}
         <div className="text-center mb-5">
@@ -46,23 +47,20 @@ const FasilitasSection = () => {
           </p>
         </div>
 
-        {/* Card grid menggunakan data dari API */}
+        {/* Card grid */}
         <div className="row g-4 justify-content-center">
           {fasilitasList.map((item) => (
             <div key={item.id} className="col-sm-10 col-md-6 col-lg-4 d-flex">
               <div className="card fasilitas-card shadow-sm rounded-4 w-100">
                 <img
-                  // Menggunakan key dari FasilitasResource: 'url_gambar'
-                  src={item.url_gambar} 
+                  src={item.image}
                   className="card-img-top"
-                  // Menggunakan key dari FasilitasResource: 'nama_fasilitas'
-                  alt={item.nama_fasilitas} 
+                  alt={item.title}
                 />
                 <div className="card-body d-flex flex-column">
-                  <span className="status-label">Available</span>
-                  <h5 className="card-title">{item.nama_fasilitas}</h5>
-                  {/* Link ke halaman detail dinamis */}
-                  <Link to={`/fasilitas/${item.id}`} className="btn mt-auto details-btn">
+                  <span className="status-label">{item.status}</span>
+                  <h5 className="card-title">{item.title}</h5>
+                  <Link to={item.link} className="btn mt-auto details-btn">
                     Details
                   </Link>
                 </div>
