@@ -74,12 +74,11 @@ const BeritaList = () => {
             <div key={berita.id} className="col-12 col-md-6 col-lg-4 d-flex">
               <div className="card shadow-lg h-100 rounded-4 overflow-hidden border-0">
                 <img
-                  // 🎯 Gunakan URL gambar dari API
-                  src={berita.image} 
-                  className="card-img-top img-fluid"
+                  src={`http://localhost:8000${berita.image}`}
                   alt={berita.title}
-                  style={{ height: '200px', objectFit: 'cover' }}
-                />
+                  className="img-fluid rounded-top"
+                  style={{ objectFit: "cover", height: "250px", width: "100%" }}
+                  />
                 <div className="card-body d-flex flex-column">
                   {/* ⚠️ Asumsi field 'published_at' ada di data API */}
                   <small className="text-muted mb-2">
@@ -104,6 +103,12 @@ const BeritaList = () => {
           ))}
         </div>
       </div>
+       {/* Tombol ke Home */}
+                          <div className="text-center mt-5">
+                              <Link to="/" className="btn btn-danger px-4 py-2 fw-bold shadow">
+                                  ⬅ Kembali ke Home
+                              </Link>
+                          </div>
       <Footer />
     </div>
   );

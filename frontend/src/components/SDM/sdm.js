@@ -1,13 +1,13 @@
-// SDM.js
-import React, { useState } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
   PieChart, Pie, Cell, Legend, Sector
 } from "recharts";
-import { Link } from "react-router-dom";
+import Header from "../home/Header";
 import Footer from "../home/Footer";
-import "../../Custom.css";
 
+// Konfigurasi API (Ganti dengan URL backend Laravel Anda)
+const API_URL = "http://localhost:8000/api/sdm"; // Pastikan port dan domain sesuai
 
 // Custom active shape for pie chart hover effect
 const renderActiveShape = (props) => {
@@ -40,85 +40,104 @@ const renderActiveShape = (props) => {
 };
 
 const SDM = () => {
+  // 1. STATE UNTUK DATA DINAMIS DARI API
+  const [layananData, setLayananData] = useState([]);
+  const [sdmLabData, setSdmLabData] = useState([]);
+  const [sekolahData, setSekolahData] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  // State untuk Recharts
   const [activeIndexLab, setActiveIndexLab] = useState(0);
   const [activeIndexSekolah, setActiveIndexSekolah] = useState(0);
 
-  // Data for the charts
-  const layananData = [
-    { name: "Model Fisik Dinamika Pantai", value: 16 },
-    { name: "Simulasi Hidro-oseanografi", value: 11 },
-    { name: "Mekanika Tanah & Akuisisi Data Lapangan", value: 12 },
-  ];
+  // Fungsi untuk mengambil data dari Laravel API
+  const fetchData = useCallback(async () => {
+    try {
+      setIsLoading(true);
+      const response = await fetch(API_URL);
+      if (!response.ok) {
+        throw new Error("Gagal mengambil data dari API SDM.");
+      }
+      const result = await response.json();
+      
+      // Data yang dikirim oleh SdmController sudah sesuai format Recharts!
+      setLayananData(result.layananData);
+      setSdmLabData(result.sdmLabData);
+      setSekolahData(result.sekolahData);
 
-  const sdmLabData = [
-    { name: "S3", value: 4 },
-    { name: "S2", value: 11 },
-    { name: "S1", value: 12 },
-    { name: "D3", value: 7 },
-    { name: "SLTA", value: 6 },
-  ];
+    } catch (error) {
+      console.error("Error fetching SDM data:", error);
+      // Opsional: Set data default jika fetch gagal
+      setLayananData([]); 
+      setSdmLabData([]);
+      setSekolahData([]);
+    } finally {
+      setIsLoading(false);
+    }
+  }, []);
 
-  const sekolahData = [
-    { name: "S3", value: 2 },
-    { name: "S2", value: 4 },
-    { name: "S1", value: 3 },
-  ];
+  // 2. EFEK UNTUK MEMANGGIL FETCH DATA SAAT KOMPONEN DIMUAT
+  useEffect(() => {
+    fetchData();
+  }, [fetchData]);
 
   const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042", "#8A2BE2"];
 
+  // 3. TAMPILKAN LOADING ATAU ERROR
+  if (isLoading) {
+    return (
+      <div className="container py-5 text-center">
+        {/* Menggunakan Tailwind/Bootstrap spinner. Asumsi Bootstrap/Tailwind tersedia. */}
+        <div className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite] text-primary" role="status">
+          <span className="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0">[Memuat...]</span>
+        </div>
+        <p className="mt-2">Memuat data statistik SDM...</p>
+      </div>
+    );
+  }
+
   return (
+    // Menggunakan data state di bawah ini
     <>
-       <div className="container py-5 animate__animated animate__fadeIn">
-       <h2 className="fw-bold text-center mb-2 text-danger">
-        Inovasi Dimulai dari Sini: Memperkenalkan Tim Unggul Kami
-         </h2>
-     <p className="text-center text-muted mb-5 lead fs-5"> {/* ADDED 'fs-5' for larger font */}
- Tim Sumber Daya Manusia kami adalah aset terbesar. Dengan beragam keahlian dan dedikasi, mereka adalah kekuatan di balik setiap inovasi dan layanan yang kami berikan.
- </p>
+     <Header />
+      <div className="container py-5 animate__animated animate__fadeIn">
+        <h2 className="fw-bold text-center mb-2 text-danger">
+          Inovasi Dimulai dari Sini: Memperkenalkan Tim Unggul Kami
+        </h2>
+        <p className="text-center text-muted mb-5 lead fs-5">
+          Tim Sumber Daya Manusia kami adalah aset terbesar. Dengan beragam keahlian dan dedikasi, mereka adalah kekuatan di balik setiap inovasi dan layanan yang kami berikan.
+        </p>
 
-
- {/* Layanan Utama Section */}
-<div className="mb-5 animate__animated animate__fadeInUp">
- <h4 className="fw-bold mb-3 section-title fs-4"> {/* INCREASED SECTION TITLE FONT */}
-Layanan Inti Kami: Menggerakkan Masa Depan
-</h4>
-<p className="text-muted fs-5"> {/* INCREASED GENERAL DESCRIPTION FONT */}
-Dengan dukungan para ahli berpengalaman dan fasilitas berstandar tinggi, 
-kami berkomitmen memberikan layanan terbaik untuk mendukung riset, inovasi, 
-serta solusi praktis di bidang kelautan dan pesisir. 
-Setiap layanan dirancang untuk menjawab tantangan nyata sekaligus membuka 
-peluang baru dalam pengembangan ilmu pengetahuan maupun penerapannya.
-</p>
-<ol className="text-muted fs-5"> {/* INCREASED LIST FONT */}
-<li>
-<strong>Uji Model Fisik Dinamika Pantai (UF)</strong> → <b>16 Ahli</b>  
-<br />
-<span className="fs-6"> {/* KEPT DETAILED DESCRIPTION SMALLER FOR HIERARCHY */}
-Layanan ini berfokus pada pengujian perilaku gelombang, arus, dan proses 
-pantai melalui pendekatan model fisik. Hasil pengujian menjadi dasar 
-penting dalam perencanaan pembangunan pesisir yang aman, efisien, dan berkelanjutan.
-</span>
-</li>
-<li className="mt-2">
-<strong>Simulasi Hidro-Oseanografi & Interaksi Air – Struktur (SHI)</strong> → <b>11 Ahli</b>  
-<br />
-<span className="fs-6"> {/* KEPT DETAILED DESCRIPTION SMALLER FOR HIERARCHY */}
-Tim kami melakukan pemodelan numerik untuk memahami interaksi kompleks 
-antara air laut, struktur, serta ekosistem. Simulasi ini membantu meminimalkan risiko 
-serta mendukung desain infrastruktur maritim yang tangguh dan ramah lingkungan.
-</span>
-</li>
-<li className="mt-2">
-<strong>Mekanika Tanah & Akuisisi Data Lapangan Pesisir (MAD)</strong> → <b>12 Ahli</b>  
-<br />
-<span className="fs-6"> {/* KEPT DETAILED DESCRIPTION SMALLER FOR HIERARCHY */}
-Layanan ini mencakup pengujian tanah, investigasi geoteknik, hingga pengumpulan 
-data lapangan yang akurat. Informasi yang diperoleh menjadi landasan kuat 
-dalam pembangunan pesisir yang stabil, aman, dan berdaya guna.
-</span>
-</li>
-</ol>
-</div>
+        {/* Layanan Utama Section */}
+        <div className="mb-5 animate__animated animate__fadeInUp">
+          <h4 className="fw-bold mb-3 section-title fs-4">
+            Layanan Inti Kami: Menggerakkan Masa Depan
+          </h4>
+          <p className="text-muted fs-5">
+            Dengan dukungan para ahli berpengalaman dan fasilitas berstandar tinggi,
+            kami berkomitmen memberikan layanan terbaik untuk mendukung riset, inovasi,
+            serta solusi praktis di bidang kelautan dan pesisir.
+            Setiap layanan dirancang untuk menjawab tantangan nyata sekaligus membuka
+            peluang baru dalam pengembangan ilmu pengetahuan maupun penerapannya.
+          </p>
+          <ol className="text-muted fs-5">
+            {/* Menggunakan data dari state layananData */}
+            {layananData.map((item, index) => (
+                <li className={index > 0 ? "mt-2" : ""} key={item.name}>
+                    <strong>{item.name}</strong> → <b>{item.value} Ahli</b>
+                    <br />
+                    <span className="fs-6">
+                        {/* Deskripsi harus diambil dari sumber data jika ada, 
+                        atau hardcoded seperti ini jika data API hanya berisi name/value */}
+                        {item.name.includes("Model Fisik") && "Layanan ini berfokus pada pengujian perilaku gelombang, arus, dan proses pantai melalui pendekatan model fisik. Hasil pengujian menjadi dasar penting dalam perencanaan pembangunan pesisir yang aman, efisien, dan berkelanjutan."}
+                        {item.name.includes("Simulasi") && "Tim kami melakukan pemodelan numerik untuk memahami interaksi kompleks antara air laut, struktur, serta ekosistem. Simulasi ini membantu meminimalkan risiko serta mendukung desain infrastruktur maritim yang tangguh dan ramah lingkungan."}
+                        {item.name.includes("Mekanika Tanah") && "Layanan ini mencakup pengujian tanah, investigasi geoteknik, hingga pengumpulan data lapangan yang akurat. Informasi yang diperoleh menjadi landasan kuat dalam pembangunan pesisir yang stabil, aman, dan berdaya guna."}
+                    </span>
+                </li>
+            ))}
+          </ol>
+        </div>
+        
         {/* Chart Grid */}
         <div className="row g-4 mb-5 animate__animated animate__fadeInUp">
           {/* Bar Chart */}
@@ -213,12 +232,15 @@ dalam pembangunan pesisir yang stabil, aman, dan berdaya guna.
           </div>
         </div>
         
-
-        {/* Back to Home Button */}
+        {/* Back to Home Button (Menggunakan button standar) */}
         <div className="text-center mt-5 animate__animated animate__fadeInUp">
-          <Link to="/" className="btn btn-secondary btn-lg rounded-pill shadow-sm">
-            <i className="bi bi-arrow-left me-2"></i> Kembali ke Beranda
-          </Link>
+          <button 
+            onClick={() => window.location.href = '/'} // Menggunakan navigasi standar
+            className="btn btn-secondary btn-lg rounded-pill shadow-sm"
+          >
+            {/* Mengganti i dengan SVG atau span untuk menghindari error font awesome jika tidak terinstal */}
+            <span className="me-2">&larr;</span> Kembali ke Beranda
+          </button>
         </div>
       </div>
       <Footer />

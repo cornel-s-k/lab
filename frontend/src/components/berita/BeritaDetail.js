@@ -86,11 +86,11 @@ const BeritaDetail = () => {
 
             {/* Gambar Utama */}
             <img
-              src={berita.image}
-              alt={berita.title}
-              className="img-fluid rounded-4 shadow-sm mb-4"
-              style={{ maxHeight: "400px", objectFit: "cover", width: "100%" }}
-            />
+  src={`http://localhost:8000${berita.image}`}
+  alt={berita.title}
+  className="img-fluid rounded-top"
+  style={{ objectFit: "cover", maxHeight: "400px", width: "100%" }}
+/>
 
             {/* Metadata */}
             <div className="text-muted small mb-3">

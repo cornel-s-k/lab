@@ -60,7 +60,7 @@ const Header = () => {
                 </a>
               <li className="nav-item">
              <Link className="nav-link" to="/berita">
-             berita
+             Berita
              </Link>
              </li>
               <li className="nav-item">

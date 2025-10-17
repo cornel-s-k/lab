@@ -1,0 +1,143 @@
+<?php
+
+namespace App\Filament\Pages;
+
+use Filament\Pages\Page;
+use App\Models\LayananData;
+use App\Models\SdmLabData;
+use App\Models\SekolahData;
+use Filament\Forms;
+use Filament\Forms\Concerns\InteractsWithForms;
+use Filament\Forms\Contracts\HasForms;
+use Filament\Notifications\Notification;
+
+class SdmSettings extends Page implements HasForms
+{
+    use InteractsWithForms;
+
+    // State untuk data Form
+    public array $layananData = [];
+    public array $sdmLabData = [];
+    public array $sekolahData = [];
+
+    protected static ?string $navigationIcon = 'heroicon-o-user-group';
+    protected static ?string $title = 'Kelola Data SDM & Layanan';
+    protected static ?string $slug = 'sdm-settings';
+    protected static ?string $navigationGroup = 'Data Statistik';
+    protected static string $view = 'filament.pages.sdm-settings';
+
+    public function mount(): void
+    {
+        // Ambil data dari database saat halaman dimuat
+        $this->layananData = LayananData::pluck('value', 'name')->toArray();
+        $this->sdmLabData = SdmLabData::pluck('value', 'name')->toArray();
+        $this->sekolahData = SekolahData::pluck('value', 'name')->toArray();
+
+        // Inisialisasi Form
+        $this->form->fill();
+    }
+
+    protected function getFormSchema(): array
+    {
+        return [
+            // Schema Kosong
+        ];
+    }
+
+    // Form 1: Layanan Data (Hanya mengembalikan array fields)
+    public function getLayananFields(): array
+    {
+        $layananNames = LayananData::pluck('name')->toArray();
+        $fields = array_map(function ($name) {
+            return [
+                'name' => $name, 
+                'value' => $this->layananData[$name] ?? 0
+            ];
+        }, $layananNames);
+
+        return $fields;
+    }
+
+    // Form 2: SDM Lab Data (Hanya mengembalikan array fields)
+    public function getSdmLabFields(): array
+    {
+        $levels = ['S3', 'S2', 'S1', 'D3', 'SLTA'];
+        $fields = array_map(function ($level) {
+            return [
+                'name' => $level, 
+                'value' => $this->sdmLabData[$level] ?? 0
+            ];
+        }, $levels);
+
+        return $fields;
+    }
+    
+    // Form 3: Tugas Belajar (Hanya mengembalikan array fields)
+    public function getSekolahFields(): array
+    {
+        $levels = ['S3', 'S2', 'S1'];
+        $fields = array_map(function ($level) {
+            return [
+                'name' => $level, 
+                'value' => $this->sekolahData[$level] ?? 0
+            ];
+        }, $levels);
+
+        return $fields;
+    }
+
+    // --- Simpan Data ---
+   public function submitLayanan(): void
+{
+    // Menggunakan data langsung dari properti Livewire $layananData
+    $data = $this->layananData;
+    
+    foreach ($data as $name => $value) {
+        LayananData::updateOrCreate(
+            ['name' => $name],
+            ['value' => $value]
+        );
+    }
+    $this->sendSuccessNotification('Layanan Data');
+    $this->mount(); // Refresh data setelah simpan
+}
+
+public function submitSdmLab(): void
+{
+    // Menggunakan data langsung dari properti Livewire $sdmLabData
+    $data = $this->sdmLabData;
+    
+    foreach ($data as $name => $value) {
+        SdmLabData::updateOrCreate(
+            ['name' => $name],
+            ['value' => $value]
+        );
+    }
+    $this->sendSuccessNotification('Kualifikasi Pendidikan SDM Lab');
+    $this->mount(); // Refresh data setelah simpan
+}
+
+public function submitSekolah(): void
+{
+    // Menggunakan data langsung dari properti Livewire $sekolahData
+    $data = $this->sekolahData;
+    
+    foreach ($data as $name => $value) {
+        SekolahData::updateOrCreate(
+            ['name' => $name],
+            ['value' => $value]
+        );
+    }
+    $this->sendSuccessNotification('Peningkatan Kapasitas SDM (Tugas Belajar)');
+    $this->mount(); // Refresh data setelah simpan
+}
+    
+    protected function sendSuccessNotification(string $type): void
+    {
+        Notification::make()
+            ->title("Berhasil disimpan!")
+            ->body("Data {$type} berhasil diperbarui.")
+            ->success()
+            ->send();
+    }
+}
