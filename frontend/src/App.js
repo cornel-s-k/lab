@@ -8,7 +8,7 @@ import Header from "./components/home/Header";
 import Herosection from "./components/home/Herosection";
 import HistoryTimeline from "./components/home/HistoryTimeline";
 import Tugas from "./components/home/Tugas";
-import TaglineSection from "./components/home/TaglineSection";
+import ProductCatalog from "./components/home/Katalog";
 import FasilitasSection from "./components/home/FasilitasSection";
 import VideoSection from "./components/home/VideoSection";
 import LayananSection from "./components/home/LayananSection";
@@ -30,7 +30,6 @@ import HKPLMFDP from "./components/hkp/HKPLMFDP";
 import HKPLSHIAS from "./components/hkp/HKPLSHIAS";
 import HKPLMTADLP from "./components/hkp/HKPLMTADLP";
 import FAQ from "./components/faq/FAQ";
-import Survey from "./components/survey/survey";
 import Timeline from "./components/timeline/timeline";
 import SDM from "./components/SDM/sdm";
 
@@ -46,7 +45,7 @@ function HomePage() {
         <Herosection />
         <HistoryTimeline />
         <Tugas />
-        <TaglineSection />
+        <ProductCatalog />
         <FasilitasSection />
         <VideoSection />
         <LayananSection />

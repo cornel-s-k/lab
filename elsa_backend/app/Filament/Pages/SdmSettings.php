@@ -28,10 +28,37 @@ class SdmSettings extends Page implements HasForms
 
     public function mount(): void
     {
-        // Ambil data dari database saat halaman dimuat
-        $this->layananData = LayananData::pluck('value', 'name')->toArray();
-        $this->sdmLabData = SdmLabData::pluck('value', 'name')->toArray();
-        $this->sekolahData = SekolahData::pluck('value', 'name')->toArray();
+        // 1. Ambil data yang sudah ada dari database
+        $layananDb = LayananData::pluck('value', 'name')->toArray();
+        $sdmLabDb = SdmLabData::pluck('value', 'name')->toArray();
+        $sekolahDb = SekolahData::pluck('value', 'name')->toArray();
+
+        $layananNames = [
+        'Model Fisik Dinamika Pantai', 
+        'Simulasi Hidro-oseanografi', 
+        'Mekanika Tanah & Akuisisi Data Lapangan'
+    ];
+        $sdmLabLevels = ['S3', 'S2', 'S1', 'D3', 'SLTA']; // Sesuai dengan getSdmLabFields()
+        $sekolahLevels = ['S3', 'S2', 'S1']; // Sesuai dengan getSekolahFields()
+
+        // 3. Gabungkan data yang ada dengan nilai default (0) untuk key yang belum ada
+        
+        // Catatan: Untuk LayananData, Anda perlu memastikan nama-nama layanannya sudah di-seed,
+        // jika tidak, $layananNames akan kosong dan array_fill_keys tidak akan berjalan.
+        
+        // Jika Anda ingin menggunakan key dari getSdmLabFields dan getSekolahFields
+        $this->sdmLabData = array_merge(array_fill_keys($sdmLabLevels, 0), $sdmLabDb);
+        $this->sekolahData = array_merge(array_fill_keys($sekolahLevels, 0), $sekolahDb);
+
+        // Untuk LayananData, Anda **harus** melakukan seeding.
+        // Jika Anda ingin menginisialisasinya secara manual (hanya untuk testing cepat)
+        // $layananDefaults = ['Model Fisik', 'Pemodelan Numerik', 'Pengujian Bahan', 'Kalibrasi Alat'];
+        // $this->layananData = array_merge(array_fill_keys($layananDefaults, 0), $layananDb);
+        
+        // Karena LayananData::pluck('name') ada di file Anda,
+        // Solusi terbaik adalah **menjalankan Seeder** untuk data LayananData.
+        // Jika LayananData::pluck('name') mengembalikan data, maka:
+        $this->layananData = array_merge(array_fill_keys($layananNames, 0), $layananDb);
 
         // Inisialisasi Form
         $this->form->fill();

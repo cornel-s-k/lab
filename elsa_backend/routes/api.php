@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SocialLinkController;
 use App\Http\Controllers\PageLinkController;
 use App\Http\Controllers\FacilityController;
+use App\Http\Controllers\Api\ProductController;
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
@@ -74,3 +75,6 @@ Route::get('/page-links/video', function () {
 
 Route::get('facilities', [FacilityController::class, 'index']);
     Route::get('facilities/{slug}', [FacilityController::class, 'show']);
+
+Route::get('products', [ProductController::class, 'index']);
+Route::get('products/{id}', [ProductController::class, 'show']);
