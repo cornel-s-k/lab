@@ -9,8 +9,8 @@ use App\Http\Controllers\Api\PartnerController;
 use App\Http\Controllers\Api\SdmController; // <-- TAMBAHKAN INI
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\SocialLinkController;
-use App\Http\Controllers\PageLinkController;
+// use App\Http\Controllers\SocialLinkController;
+// use App\Http\Controllers\PageLinkController;
 use App\Http\Controllers\FacilityController;
 use App\Http\Controllers\Api\ProductController;
 
@@ -33,11 +33,11 @@ Route::get('/partners', [PartnerController::class, 'index']);
 // ----------------------------------------------------
 Route::get('/sdm', [SdmController::class, 'index']); // <-- TAMBAHKAN INI
 
-Route::get('/social-links', [SocialLinkController::class, 'index']);
-Route::post('/social-links', [SocialLinkController::class, 'store']);
+// Route::get('/social-links', [SocialLinkController::class, 'index']);
+// Route::post('/social-links', [SocialLinkController::class, 'store']);
 
-Route::get('/page-links', [PageLinkController::class, 'index']);
-Route::post('/page-links', [PageLinkController::class, 'store']);
+// Route::get('/page-links', [PageLinkController::class, 'index']);
+// Route::post('/page-links', [PageLinkController::class, 'store']);
 
 use App\Models\PageLink;
 
@@ -77,4 +77,4 @@ Route::get('facilities', [FacilityController::class, 'index']);
     Route::get('facilities/{slug}', [FacilityController::class, 'show']);
 
 Route::get('products', [ProductController::class, 'index']);
-Route::get('products/{id}', [ProductController::class, 'show']);
+Route::get('products/{slug}', [ProductController::class, 'show']);

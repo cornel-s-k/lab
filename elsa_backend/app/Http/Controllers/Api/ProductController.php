@@ -13,13 +13,13 @@ class ProductController extends Controller
      */
     public function index()
     {
-        // Ambil data dengan kolom yang dibutuhkan saja (ringkas)
-        $products = Product::select('id', 'title', 'short_description', 'image_path')->get();
+        // Tambahkan slug biar frontend bisa akses link detail
+        $products = Product::select('id', 'title', 'short_description', 'image_path', 'slug')->get();
 
-        // Ubah path gambar menjadi URL publik
+        // Ubah path gambar jadi URL publik
         $products->transform(function ($product) {
-            $product->image = asset('storage/' . $product->image_path); // Sesuaikan dengan konfigurasi storage Laravel Anda
-            unset($product->image_path); // Hapus path internal
+            $product->image = asset('storage/' . $product->image_path);
+            unset($product->image_path);
             return $product;
         });
 
@@ -27,20 +27,23 @@ class ProductController extends Controller
             'data' => $products
         ]);
     }
-    
+
     /**
-     * Mengambil detail produk berdasarkan ID.
+     * Mengambil detail produk berdasarkan SLUG.
      */
-    public function show($id)
+    public function show($slug) // <-- Ubah dari Product $product menjadi $slug
     {
-        $product = Product::findOrFail($id);
-        
-        // Ubah path gambar menjadi URL publik
-        $product->image = asset('storage/' . $product->image_path);
+        // Cari produk berdasarkan slug, dan throw 404 jika tidak ditemukan
+        $product = Product::where('slug', $slug)->firstOrFail(); 
+
+        // Pastikan image_path tidak kosong
+        if ($product->image_path) {
+            $product->image = asset('storage/' . $product->image_path);
+        } else {
+            $product->image = null;
+        }
+
         unset($product->image_path);
-        
-        // Pastikan details di-decode jika disimpan sebagai JSON string
-        $product->details = json_decode($product->details, true);
 
         return response()->json([
             'data' => $product

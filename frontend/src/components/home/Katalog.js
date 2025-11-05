@@ -87,7 +87,7 @@ const ProductCatalog = () => {
         ) : (
           <>
             <h2 className="text-center fw-bold mb-5 display-5 text-red">
-              Layanan Unggulan Kami 🌊
+              Katalog Layanan Kami
             </h2>
             <div className="row">
               {products.map((product) => (

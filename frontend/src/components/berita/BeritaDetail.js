@@ -113,7 +113,7 @@ const BeritaDetail = () => {
             {/* Tombol Back di bawah konten */}
             <div className="text-center">
               <Link
-                to="/berita"
+                to="/"
                 className="btn btn-lg"
                 style={{ backgroundColor: "#A8A196", color: "white" }}
               >

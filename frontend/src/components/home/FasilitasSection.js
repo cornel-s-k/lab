@@ -1,109 +1,109 @@
-// FasilitasSection.js
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import "bootstrap/dist/css/bootstrap.min.css";
-import fasilitas1 from "../../assets/home/fasil1.jpeg";
-import fasilitas2 from "../../assets/home/fasil2.jpeg";
-import fasilitas3 from "../../assets/home/fasil3.jpeg";
+// import "bootstrap/dist/css/bootstrap.min.css"; 
 
 const FasilitasSection = () => {
-  // Data fasilitas dalam array
-  const fasilitasList = [
-    {
-      id: 1,
-      title: "Uji Model Fisik Dinamika Pantai",
-      image: fasilitas1,
-      status: "Available",
-      link: "/fasilitas/1",
-    },
-    {
-      id: 2,
-      title: "Simulasi Hidro-Oseanografi & Interaksi Air Struktur",
-      image: fasilitas2,
-      status: "Available",
-      link: "/fasilitas/2",
-    },
-    {
-      id: 3,
-      title: "Mekanika Tanah dan Akuisisi Data Lapangan Pesisir",
-      image: fasilitas3,
-      status: "Available",
-      link: "/fasilitas/3",
-    },
-  ];
+  const [fasilitasList, setFasilitasList] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  const API_BASE_URL = "http://localhost:8000/api/facilities";
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(API_BASE_URL);
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const apiData = await response.json();
+
+        const processedData = apiData.map((item) => ({
+          id: item.id,
+          title: item.title,
+          slug: item.slug,
+          status: item.status,
+           image: item.image, 
+        }));
+
+        setFasilitasList(processedData);
+        setError(null);
+      } catch (e) {
+        console.error("Failed to fetch facilities:", e);
+        setError("Gagal memuat data fasilitas dari server.");
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  let content;
+  if (isLoading) {
+    content = <p className="text-center text-muted">Memuat fasilitas...</p>;
+  } else if (error) {
+    content = (
+      <div className="alert alert-warning text-center" role="alert">
+        {error}
+      </div>
+    );
+  } else if (fasilitasList.length === 0) {
+    content = (
+      <p className="text-center text-muted">
+        Belum ada data fasilitas yang tersedia.
+      </p>
+    );
+  } else {
+    content = <FasilitasGrid fasilitasList={fasilitasList} />;
+  }
 
   return (
-    // Add the id="fasilitas-section" here
-    <section id="fasilitas-section" className="bg-white py-5"
-    style={{ paddingTop: "110px" }} 
- className="about-section pb-5 bg-light">
+    <section
+      id="fasilitas-section"
+      className="bg-white py-5 about-section pb-5 bg-light"
+      style={{ paddingTop: "110px" }}
+    >
       <div className="container">
-        {/* Judul */}
         <div className="text-center mb-5">
           <h2 className="fw-bold mb-2 text-black">Fasilitas</h2>
           <p className="lead text-muted">
-            Fasilitas modern dengan standar tinggi untuk mendukung riset dan
-            layanan terbaik.
+            Fasilitas modern dengan standar tinggi untuk mendukung riset dan layanan terbaik.
           </p>
         </div>
-
-        {/* Card grid */}
-        <div className="row g-4 justify-content-center">
-          {fasilitasList.map((item) => (
-            <div key={item.id} className="col-sm-10 col-md-6 col-lg-4 d-flex">
-              <div className="card fasilitas-card shadow-sm rounded-4 w-100">
-                <img
-                  src={item.image}
-                  className="card-img-top"
-                  alt={item.title}
-                />
-                <div className="card-body d-flex flex-column">
-                  <span className="status-label">{item.status}</span>
-                  <h5 className="card-title">{item.title}</h5>
-                  <Link to={item.link} className="btn mt-auto details-btn">
-                    Details
-                  </Link>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
+        {content}
       </div>
 
-      {/* Custom styling */}
       <style jsx>{`
         .fasilitas-card {
-          background-color: #efefef;
+          background-color: #f7f7f7;
           border: none;
-          min-height: 400px;
+          min-height: 200px;
           transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
         .fasilitas-card:hover {
-          transform: translateY(-8px);
-          box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-        }
-        .card-img-top {
-          border-radius: 0.75rem 0.75rem 0 0 !important;
-          height: 180px;
-          object-fit: cover;
+          transform: translateY(-6px);
+          box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
         }
         .card-title {
           color: #8e1616;
           font-weight: bold;
-          font-size: 1rem;
+          font-size: 1.05rem;
+          margin-bottom: 0.5rem;
         }
         .status-label {
           color: #4c9f4e;
           font-weight: bold;
           font-size: 0.85rem;
-          margin-bottom: 6px;
+          margin-bottom: 8px;
         }
         .details-btn {
           background-color: #a8a196;
           color: white;
           font-weight: 500;
           border: none;
-          padding: 0.5rem 1.2rem;
+          padding: 0.45rem 1.2rem;
           border-radius: 10px;
           transition: background-color 0.3s ease;
         }
@@ -113,15 +113,42 @@ const FasilitasSection = () => {
         }
         @media (max-width: 576px) {
           .fasilitas-card {
-            min-height: 360px;
-          }
-          .card-img-top {
-            height: 150px;
+            min-height: 180px;
           }
         }
       `}</style>
     </section>
   );
 };
+
+const FasilitasGrid = ({ fasilitasList }) => (
+  <div className="row g-4 justify-content-center">
+    {fasilitasList.map((item) => (
+      <div key={item.id} className="col-sm-10 col-md-6 col-lg-4 d-flex">
+        <div className="card fasilitas-card shadow-sm rounded-4 w-100 d-flex flex-column">
+          <img
+  src={`http://localhost:8000/storage/${item.image}`}
+  alt={item.title}
+  className="card-img-top rounded-4"
+  style={{ height: "200px", objectFit: "cover" }}
+/>
+
+          <div className="card-body d-flex flex-column justify-content-between">
+            <div>
+              <span className="status-label">{item.status}</span>
+              <h5 className="card-title">{item.title}</h5>
+            </div>
+            <Link
+              to={`/fasilitas/${item.slug}`}
+              className="btn mt-auto details-btn align-self-start"
+            >
+              Details
+            </Link>
+          </div>
+        </div>
+      </div>
+    ))}
+  </div>
+);
 
 export default FasilitasSection;

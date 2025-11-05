@@ -35,6 +35,7 @@ import SDM from "./components/SDM/sdm";
 
 import BeritaList from './components/berita/BeritaList';    // Sesuaikan path jika berbeda
 import BeritaDetail from './components/berita/BeritaDetail'; // Sesuaikan path jika berbeda
+import ProductDetail from "./components/katalog/ProductDetail";
 
 // 🔹 Halaman utama (HomePage)
 function HomePage() {
@@ -81,7 +82,7 @@ function App() {
 
         {/* Halaman Detail Fasilitas */}
         <Route path="/fasilitas/1" element={<FasilitasDetail1 />} />
-        <Route path="/fasilitas/2" element={<FasilitasDetail2 />} />
+        <Route path="/fasilitas/:slug" element={<FasilitasDetail2 />} />
         <Route path="/fasilitas/3" element={<FasilitasDetail3 />} />
 
         {/* Halaman Detail HKP */}
@@ -93,7 +94,8 @@ function App() {
          {/* 🎯 RUTE BARU UNTUK BERITA: */}
     <Route path="/berita" element={<BeritaList />} />          {/* Tampilan Daftar Berita */}
     <Route path="/berita/:id" element={<BeritaDetail />} /> 
-
+    <Route path="/katalog/:slug" element={<ProductDetail />} />
+   
       </Routes>
     </Router>
   );
