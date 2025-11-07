@@ -60,23 +60,31 @@ class FacilityResource extends Resource
 }
 
     public static function table(Table $table): Table
-    {
-        return $table
-            ->columns([
-                //
-            ])
-            ->filters([
-                //
-            ])
-            ->actions([
-                Tables\Actions\EditAction::make(),
-            ])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
-            ]);
-    }
+{
+    return $table
+        ->columns([
+            Tables\Columns\TextColumn::make('title')
+                ->label('Facility Name')
+                ->sortable()
+                ->searchable(),
+
+            // Tambahan kalau mau tampilkan tipe dan urutan juga
+            Tables\Columns\TextColumn::make('detail_type')->label('Detail Type'),
+            Tables\Columns\TextColumn::make('sort_order')->label('Order'),
+        ])
+        ->filters([
+            //
+        ])
+        ->actions([
+            Tables\Actions\EditAction::make(),
+        ])
+        ->bulkActions([
+            Tables\Actions\BulkActionGroup::make([
+                Tables\Actions\DeleteBulkAction::make(),
+            ]),
+        ]);
+}
+
 
     public static function getRelations(): array
     {

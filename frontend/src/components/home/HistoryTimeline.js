@@ -8,15 +8,13 @@ import {
 import "../../Custom.css"; // Import CSS custom
 
 const HistoryTimeline = () => {
-  // 1. STATE BARU: timelineData sekarang kosong (akan diisi dari API)
   const [timelineData, setTimelineData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  // GANTI DENGAN URL API LARAVEL ANDA! (Pastikan port dan domain sudah benar)
   const API_URL = 'http://localhost:8000/api/history'; 
 
-  // 2. HOOK useEffect UNTUK FETCH DATA
+  // HOOK useEffect UNTUK FETCH DATA
   useEffect(() => {
     const fetchHistory = async () => {
       try {
@@ -74,7 +72,7 @@ const HistoryTimeline = () => {
 
   const currentItem = timelineData[currentIndex];
 
-  // 3. TAMPILAN LOADING / EMPTY STATE
+  //TAMPILAN LOADING
   if (loading) {
     return (
         <section className="timeline-section py-5">
@@ -97,7 +95,7 @@ const HistoryTimeline = () => {
       );
   }
 
-  // 4. TAMPILAN NORMAL (menggunakan currentItem dari API)
+  //TAMPILAN NORMAL
   return (
     <section className="timeline-section py-5">
       <div className="container">

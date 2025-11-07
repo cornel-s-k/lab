@@ -4,15 +4,15 @@ import { Link, useParams } from "react-router-dom"; // Import useParams
 import Footer from "../home/Footer";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-const HKPLSHIAS = () => { // Ganti nama fungsi
-  const { code } = useParams(); // Ambil 'code' dari URL (e.g., HKPL-MFDP)
+const HKPLSHIAS = () => { 
+  const { code } = useParams(); 
   const [hkp, setHkp] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchHkpDetail = async () => {
       try {
-        const API_URL = `http://localhost:8000/api/hkp/HKPL-SHIAS`; // Menggunakan code dari URL
+        const API_URL = `http://localhost:8000/api/hkp/HKPL-SHIAS`; 
         const response = await fetch(API_URL);
 
         if (response.status === 404) {

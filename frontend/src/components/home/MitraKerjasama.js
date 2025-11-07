@@ -5,7 +5,7 @@ import React, { useState, useEffect } from "react";
 const MitraKerjasama = () => {
   const [partners, setPartners] = useState([]);
   const [loading, setLoading] = useState(true);
-  const API_URL = 'http://localhost:8000/api/partners'; // Ganti dengan URL API Anda
+  const API_URL = 'http://localhost:8000/api/partners'; 
 
   useEffect(() => {
     const fetchPartners = async () => {
@@ -32,7 +32,7 @@ const MitraKerjasama = () => {
     fetchPartners();
   }, []); // useEffect hanya dijalankan sekali setelah render pertama
 
-  // Jika masih loading atau tidak ada data, tampilkan pesan
+ //pesan memuat
   if (loading) {
       return (
           <section className="py-5 text-center bg-light">
@@ -58,7 +58,6 @@ const MitraKerjasama = () => {
   // Menggunakan data dari API untuk tampilan slider
   return (
     <section className="py-5 text-center bg-light">
-      {/* ... (Style CSS tetap sama) ... */}
       <style>{`
         .slider {
           overflow: hidden;

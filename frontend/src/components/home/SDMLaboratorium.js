@@ -41,7 +41,6 @@ const SDMLaboratorium = () => {
         </div>
       </div>
 
-      {/* Custom CSS */}
       <style jsx>{`
         .overlay {
           position: absolute;

@@ -19,7 +19,7 @@ return new class extends Migration
         $table->text('short_description');
         $table->longText('full_description');
         $table->string('image_path')->nullable(); // Untuk menyimpan path gambar
-        $table->json('details')->nullable(); // Untuk menyimpan array detail layanan
+        $table->string('read_more_link')->nullable();
         $table->timestamps();
     });
     }

@@ -127,11 +127,11 @@ const FasilitasGrid = ({ fasilitasList }) => (
       <div key={item.id} className="col-sm-10 col-md-6 col-lg-4 d-flex">
         <div className="card fasilitas-card shadow-sm rounded-4 w-100 d-flex flex-column">
           <img
-  src={`http://localhost:8000/storage/${item.image}`}
-  alt={item.title}
-  className="card-img-top rounded-4"
-  style={{ height: "200px", objectFit: "cover" }}
-/>
+            src={`http://localhost:8000/storage/${item.image}`}
+            alt={item.title}
+            className="card-img-top rounded-4"
+            style={{ height: "200px", objectFit: "cover" }}
+          />
 
           <div className="card-body d-flex flex-column justify-content-between">
             <div>

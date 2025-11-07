@@ -55,9 +55,12 @@ class ProductResource extends Resource
                     ->image()
                     ->directory('products') // Simpan di direktori storage/app/public/products
                     ->nullable(),
-                KeyValue::make('details')
-                    ->label('Detail Layanan (JSON)')
-                    ->helperText('Contoh: "Fitur A": "Nilai A"'),
+                TextInput::make('read_more_link') // <<< TAMBAHKAN INI
+                    ->label('Link Baca Lebih Lanjut (URL)')
+                    ->url() // Validasi input harus berupa URL
+                    ->maxLength(255)
+                    ->nullable()
+                    ->helperText('URL eksternal untuk informasi produk lebih lanjut (misal: halaman PDF atau blog).'),
             ]);
     }
 
@@ -73,11 +76,11 @@ class ProductResource extends Resource
                 ImageColumn::make('image_path')
                     ->label('Gambar')
                     ->size(50),
-                IconColumn::make('details')
-                    ->label('Detail (JSON)')
-                    ->getStateUsing(fn ($record) => $record->details ? 'true' : 'false')
-                    ->icon(fn ($state) => $state === 'true' ? 'heroicon-o-check-circle' : 'heroicon-o-x-circle')
-                    ->color(fn ($state) => $state === 'true' ? 'success' : 'danger'),
+                TextColumn::make('read_more_link') // <<< TAMBAHKAN KOLOM BARU INI
+                    ->label('Link Baca Lanjut')
+                    ->limit(30) // Batasi tampilan URL
+                    ->url(fn ($record) => $record->read_more_link) // Jadikan teksnya link yang bisa diklik
+                    ->openUrlInNewTab(),
                 TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()

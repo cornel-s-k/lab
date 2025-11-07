@@ -5,14 +5,14 @@ import Footer from "../home/Footer";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 const HKPLMFDP = () => { // Ganti nama fungsi
-  const { code } = useParams(); // Ambil 'code' dari URL (e.g., HKPL-MFDP)
+  const { code } = useParams(); 
   const [hkp, setHkp] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchHkpDetail = async () => {
       try {
-        const API_URL = `http://localhost:8000/api/hkp/HKPL-MFDP`; // Menggunakan code dari URL
+        const API_URL = `http://localhost:8000/api/hkp/HKPL-MFDP`; 
         const response = await fetch(API_URL);
 
         if (response.status === 404) {

@@ -6,10 +6,8 @@ import {
 import Header from "../home/Header";
 import Footer from "../home/Footer";
 
-// Konfigurasi API (Ganti dengan URL backend Laravel Anda)
-const API_URL = "http://localhost:8000/api/sdm"; // Pastikan port dan domain sesuai
+const API_URL = "http://localhost:8000/api/sdm";
 
-// Custom active shape for pie chart hover effect
 const renderActiveShape = (props) => {
   const RADIAN = Math.PI / 180;
   const {
@@ -40,17 +38,17 @@ const renderActiveShape = (props) => {
 };
 
 const SDM = () => {
-  // 1. STATE UNTUK DATA DINAMIS DARI API
+  //STATE UNTUK DATA DINAMIS DARI API
   const [layananData, setLayananData] = useState([]);
   const [sdmLabData, setSdmLabData] = useState([]);
   const [sekolahData, setSekolahData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  // State untuk Recharts
+  //State untuk Recharts
   const [activeIndexLab, setActiveIndexLab] = useState(0);
   const [activeIndexSekolah, setActiveIndexSekolah] = useState(0);
 
-  // Fungsi untuk mengambil data dari Laravel API
+  //Fungsi untuk mengambil data dari Laravel API
   const fetchData = useCallback(async () => {
     try {
       setIsLoading(true);
@@ -60,14 +58,14 @@ const SDM = () => {
       }
       const result = await response.json();
       
-      // Data yang dikirim oleh SdmController sudah sesuai format Recharts!
+      //Data yang dikirim oleh SdmController sudah sesuai format Recharts!
       setLayananData(result.layananData);
       setSdmLabData(result.sdmLabData);
       setSekolahData(result.sekolahData);
 
     } catch (error) {
       console.error("Error fetching SDM data:", error);
-      // Opsional: Set data default jika fetch gagal
+      //Opsional: Set data default jika fetch gagal
       setLayananData([]); 
       setSdmLabData([]);
       setSekolahData([]);
@@ -76,18 +74,17 @@ const SDM = () => {
     }
   }, []);
 
-  // 2. EFEK UNTUK MEMANGGIL FETCH DATA SAAT KOMPONEN DIMUAT
+  //EFEK UNTUK MEMANGGIL FETCH DATA SAAT KOMPONEN DIMUAT
   useEffect(() => {
     fetchData();
   }, [fetchData]);
 
   const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042", "#8A2BE2"];
 
-  // 3. TAMPILKAN LOADING ATAU ERROR
+  //TAMPILKAN LOADING ATAU ERROR
   if (isLoading) {
     return (
       <div className="container py-5 text-center">
-        {/* Menggunakan Tailwind/Bootstrap spinner. Asumsi Bootstrap/Tailwind tersedia. */}
         <div className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite] text-primary" role="status">
           <span className="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0">[Memuat...]</span>
         </div>
@@ -97,7 +94,6 @@ const SDM = () => {
   }
 
   return (
-    // Menggunakan data state di bawah ini
     <>
      <Header />
       <div className="container py-5 animate__animated animate__fadeIn">
@@ -107,7 +103,6 @@ const SDM = () => {
         <p className="text-center text-muted mb-5 lead fs-5">
           Tim Sumber Daya Manusia kami adalah aset terbesar. Dengan beragam keahlian dan dedikasi, mereka adalah kekuatan di balik setiap inovasi dan layanan yang kami berikan.
         </p>
-
         {/* Layanan Utama Section */}
         <div className="mb-5 animate__animated animate__fadeInUp">
           <h4 className="fw-bold mb-3 section-title fs-4">

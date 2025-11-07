@@ -17,7 +17,7 @@ class Product extends Model
         'short_description',
         'full_description',
         'image_path',
-        'details',
+        'read_more_link',
     ];
     
     /**
@@ -26,13 +26,12 @@ class Product extends Model
      * @var array
      */
     protected $casts = [
-        'details' => 'array', // Penting agar 'details' otomatis di-decode/encode JSON
     ];
     /**
      * Get the route key for the model.
      * * @return string
      */
-    public function getRouteKeyName() // <-- TAMBAHKAN INI
+    public function getRouteKeyName() 
     {
         return 'slug';
     }

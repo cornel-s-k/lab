@@ -1,13 +1,7 @@
 // src/components/home/HKPSection.js
-// src/components/home/HKPSection.js
 import React, { useState, useEffect } from "react"; 
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Link } from "react-router-dom";
-
-// Hapus import gambar yang hardcoded:
-// import hkp1 from "../../assets/home/mfdp.png";
-// import hkp2 from "../../assets/home/shiass.jpeg";
-// import hkp3 from "../../assets/home/mtalpp.png";
 
 const HKPSection = () => {
   const [hkpData, setHkpData] = useState([]);
@@ -16,7 +10,6 @@ const HKPSection = () => {
   useEffect(() => {
     const fetchHkps = async () => {
       try {
-        // Ganti dengan URL API yang benar
         const API_URL = "http://localhost:8000/api/hkp"; 
         const response = await fetch(API_URL);
 
@@ -25,7 +18,6 @@ const HKPSection = () => {
         }
 
         const data = await response.json();
-        // Data dari API sudah memiliki format {code, title, image: url, link}
         setHkpData(data); 
 
       } catch (e) {
@@ -69,7 +61,7 @@ const HKPSection = () => {
             >
               <div className="card h-100 shadow-lg rounded-4 overflow-hidden border-0 position-relative card-hover">
                 {/* Gambar dengan overlay */}
-                <div className="position-relative card-img-container"> {/* Added new class for image container */}
+                <div className="position-relative card-img-container">
                   <img
                     src={item.image}
                     className="card-img-top img-fluid"
@@ -94,8 +86,6 @@ const HKPSection = () => {
           ))}
         </div>
       </div>
-
-      {/* Custom CSS */}
       <style jsx>{`
         /* Animasi Section */
         .animate-title {

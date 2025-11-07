@@ -58,13 +58,11 @@ const ProductCatalog = () => {
 
   const isDetailView = selectedProduct !== null;
 
-  // --- Style CSS (tetap sama seperti jawaban sebelumnya, tambahkan kembali di sini atau App.css) ---
   const customStyles = `
     .text-red { color: #8e1616; }
     .custom-btn { background-color: #8e1616; color: #ead196; border: none; padding: 0.5rem 1.5rem; font-weight: 600; transition: all 0.3s ease; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); }
     .custom-btn:hover { background-color: #730303; transform: translateY(-1px); box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); }
   `;
-  // -------------------------------------------------------------------------------------------------
 
   if (isLoading && !isDetailView) {
     return <div className="container py-5 text-center">Memuat data layanan...</div>;

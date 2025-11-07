@@ -5,14 +5,14 @@ import Footer from "../home/Footer";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 const HKPLMTADLP = () => { // Ganti nama fungsi
-  const { code } = useParams(); // Ambil 'code' dari URL (e.g., HKPL-MFDP)
+  const { code } = useParams(); 
   const [hkp, setHkp] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchHkpDetail = async () => {
       try {
-        const API_URL = `http://localhost:8000/api/hkp/HKPL-MTADLP`; // Menggunakan code dari URL
+        const API_URL = `http://localhost:8000/api/hkp/HKPL-MTADLP`; 
         const response = await fetch(API_URL);
 
         if (response.status === 404) {
@@ -54,7 +54,6 @@ const HKPLMTADLP = () => { // Ganti nama fungsi
           <h1 className="fw-bold mb-3 text-secondary animate__animated animate__fadeInDown">
             Hak dan Kewajiban Pengguna Layanan
           </h1>
-          {/* Ganti judul dengan data dari API */}
           <h2 className="fw-bold display-5 text-dark animate__animated animate__fadeIn">
             {hkp.title}
           </h2>

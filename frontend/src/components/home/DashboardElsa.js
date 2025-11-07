@@ -9,7 +9,6 @@ const DashboardElsa = () => {
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
-        // Ganti URL_API_BACKEND dengan URL backend/API Laravel Anda yang sebenarnya
         // Endpoint ini harus Anda buat untuk mengambil link 'Capaian ELSA'
         const API_URL = "http://localhost:8000/api/page-links/capaian-elsa"; 
 
@@ -82,7 +81,6 @@ const DashboardElsa = () => {
                 </div>
             </div>
 
-            {/* Custom Style (Tidak diubah) */}
             <style jsx>{`
                 .dashboard-section {
                     background-color: #f8f9fa;

@@ -1,26 +1,20 @@
 // LayananSection.js
-
 import React, { useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-// Hapus import gambar yang hardcoded:
-// import image1 from "../../assets/home/3d.jpeg"; 
-// ...
-// Hapus Link jika tidak dipakai, ganti dengan <a>
 
 const LayananSection = () => {
-  // 1. State untuk menyimpan data layanan dari API
+  //State untuk menyimpan data layanan dari API
   const [services, setServices] = useState([]);
-  // 2. State untuk menangani status loading
+  //State untuk menangani status loading
   const [isLoading, setIsLoading] = useState(true); 
-  // 3. State untuk error
+  //State untuk error
   const [error, setError] = useState(null);
 
-  // 4. Effect untuk fetching data
+  //Effect untuk fetching data
   useEffect(() => {
     const fetchServices = async () => {
       try {
-        // Ganti URL ini dengan URL endpoint API Anda
-        const API_URL = "http://localhost:8000/api/layanan"; // <--- SESUAIKAN
+        const API_URL = "http://localhost:8000/api/layanan"; 
         
         const response = await fetch(API_URL);
 
@@ -55,7 +49,6 @@ const LayananSection = () => {
       <section id="layanan-section" className="py-5 bg-light">
         <div className="container text-center">
           <p>Memuat layanan...</p> 
-          {/* Anda bisa menggunakan spinner Bootstrap di sini */}
         </div>
       </section>
     );

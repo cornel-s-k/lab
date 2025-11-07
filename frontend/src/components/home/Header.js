@@ -69,15 +69,14 @@ const Header = () => {
                 </Link>
               </li>
              <li className="nav-item ms-lg-3">
-  <a
-    href="tel:08119811589"
-    className="btn rounded-pill text-white btn-custom-hover"
-    style={{ backgroundColor: "#A8A196" }}
-  >
-    Hubungi Kami
-  </a>
-</li>
-
+               <a
+                href="tel:08119811589"
+                className="btn rounded-pill text-white btn-custom-hover"
+                style={{ backgroundColor: "#A8A196" }}
+               >
+              Hubungi Kami
+                </a>
+            </li>
             </ul>
           </div>
         </div>

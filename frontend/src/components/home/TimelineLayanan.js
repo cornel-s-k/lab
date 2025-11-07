@@ -10,26 +10,20 @@ const TimelineLayanan = () => {
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
-        // 1. Ganti URL_API_BACKEND dengan URL backend/API Laravel Anda
-        const API_URL = "http://localhost:8000/api/page-links/timeline"; // Contoh: buat endpoint kustom
+        const API_URL = "http://localhost:8000/api/page-links/timeline"; 
 
         const fetchTimelineLink = async () => {
             try {
-                // Asumsi: Anda membuat endpoint API kustom
-                // untuk mendapatkan link berdasarkan nama 'Timeline'
                 const response = await fetch(API_URL);
                 if (!response.ok) {
                     throw new Error("Failed to fetch timeline link");
                 }
                 const data = await response.json();
-
-                // Asumsi: Data yang dikembalikan memiliki properti 'link'
                 if (data.link) {
                     setTimelineLink(data.link);
                 }
             } catch (error) {
                 console.error("Error fetching data from API:", error);
-                // Biarkan timelineLink tetap pada nilai default jika gagal
             } finally {
                 setIsLoading(false);
             }
@@ -76,8 +70,6 @@ const TimelineLayanan = () => {
                     </div>
                 </div>
             </div>
-
-            {/* Custom CSS (Tidak diubah) */}
             <style jsx>{`
                 .timeline-layanan-section {
                     background-color: #8e1616;

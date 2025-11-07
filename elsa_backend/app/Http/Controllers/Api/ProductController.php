@@ -34,7 +34,9 @@ class ProductController extends Controller
     public function show($slug) // <-- Ubah dari Product $product menjadi $slug
     {
         // Cari produk berdasarkan slug, dan throw 404 jika tidak ditemukan
-        $product = Product::where('slug', $slug)->firstOrFail(); 
+        $product = Product::where('slug', $slug)
+            ->select('id', 'title', 'slug', 'short_description', 'full_description', 'image_path', 'read_more_link') // <<< PASTIKAN 'read_more_link' ADA DI SINI
+            ->firstOrFail();
 
         // Pastikan image_path tidak kosong
         if ($product->image_path) {
