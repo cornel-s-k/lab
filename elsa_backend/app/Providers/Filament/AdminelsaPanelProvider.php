@@ -57,6 +57,6 @@ class AdminelsaPanelProvider extends PanelProvider
     }
     public function canAccessPanel(Panel $panel): bool
 {
-    return auth()->check() && auth()->user()->email === 'admin@elsa.id';
+    return auth()->check();
 }
 }
