@@ -55,4 +55,8 @@ class AdminelsaPanelProvider extends PanelProvider
                 Authenticate::class,
             ]);
     }
+    public function canAccessPanel(Panel $panel): bool
+{
+    return auth()->check() && auth()->user()->email === 'admin@elsa.id';
+}
 }
