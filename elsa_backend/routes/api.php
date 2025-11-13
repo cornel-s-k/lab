@@ -74,7 +74,7 @@ Route::get('/page-links/video', function () {
 
 
 Route::get('facilities', [FacilityController::class, 'index']);
-    Route::get('facilities/{slug}', [FacilityController::class, 'show']);
+Route::get('facilities/{slug}', [FacilityController::class, 'show']);
 
 Route::get('products', [ProductController::class, 'index']);
 Route::get('products/{slug}', [ProductController::class, 'show']);

@@ -6,17 +6,8 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     * Menambahkan semua kolom detail yang hilang sekaligus:
-     * title, lead_text, dan main_image.
-     * Kolom software_list dan service_items sudah ada di migration create.
-     */
     public function up(): void
     {
-        // Karena batasan SQLite, kita memisahkan setiap ADD COLUMN 
-        // ke dalam closure Schema::table yang berbeda.
-        
         // 1. Tambahkan kolom 'title'
         Schema::table('facility_detail2s', function (Blueprint $table) {
             // Menggunakan tipe string dan diletakkan setelah 'id'
@@ -36,10 +27,6 @@ return new class extends Migration
         });
     }
 
-    /**
-     * Reverse the migrations.
-     * Mengembalikan perubahan yang dilakukan di atas.
-     */
     public function down(): void
     {
         Schema::table('facility_detail2s', function (Blueprint $table) {
