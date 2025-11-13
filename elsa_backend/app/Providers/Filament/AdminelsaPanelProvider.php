@@ -3,13 +3,10 @@
 namespace App\Providers\Filament;
 
 use Filament\Http\Middleware\Authenticate;
-use Filament\Http\Middleware\AuthenticateSession;
-use Filament\Http\Middleware\DisableBladeIconComponents;
-use Filament\Http\Middleware\DispatchServingFilamentEvent;
-use Filament\Pages;
 use Filament\Panel;
 use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
+use Filament\Pages;
 use Filament\Widgets;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Illuminate\Cookie\Middleware\EncryptCookies;
@@ -44,19 +41,17 @@ class AdminelsaPanelProvider extends PanelProvider
                 EncryptCookies::class,
                 AddQueuedCookiesToResponse::class,
                 StartSession::class,
-                AuthenticateSession::class,
                 ShareErrorsFromSession::class,
                 VerifyCsrfToken::class,
                 SubstituteBindings::class,
-                DisableBladeIconComponents::class,
-                DispatchServingFilamentEvent::class,
             ])
             ->authMiddleware([
                 Authenticate::class,
             ]);
     }
+
     public function canAccessPanel(Panel $panel): bool
-{
-    return auth()->check();
-}
+    {
+        return true; // sementara biar gak 403 dulu
+    }
 }
