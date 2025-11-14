@@ -5,9 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Filament\Models\Contracts\FilamentUser; // TAMBAHKAN INI
+use Filament\Models\Contracts\FilamentUser; // BENAR
 
-class User extends Authenticatable implements FilamentUser // TAMBAHKAN implements FilamentUser
+class User extends Authenticatable implements FilamentUser // BENAR
 {
     use HasFactory, Notifiable;
 
@@ -30,8 +30,8 @@ class User extends Authenticatable implements FilamentUser // TAMBAHKAN implemen
         ];
     }
 
-    // TAMBAHKAN METHOD INI DI BAWAH
-    public function canAccessFilament(): bool
+    // GANTI DARI canAccessFilament() KE canAccessPanel()
+    public function canAccessPanel(\Filament\Panel $panel): bool
     {
         return $this->email === 'admin@elsa.id';
     }
