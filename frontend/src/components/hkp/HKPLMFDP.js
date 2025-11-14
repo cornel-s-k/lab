@@ -11,26 +11,27 @@ const HKPLMFDP = () => { // Ganti nama fungsi
 
   useEffect(() => {
     const fetchHkpDetail = async () => {
-      try {
-        const API_URL = `http://localhost:8000/api/hkp/HKPL-MFDP`; 
-        const response = await fetch(API_URL);
+  try {
+    const API_URL = `${process.env.REACT_APP_API_URL}/api/hkp/HKPL-MFDP`;
+    const response = await fetch(API_URL);
 
-        if (response.status === 404) {
-             throw new Error("Data HKP tidak ditemukan.");
-        }
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
+    if (response.status === 404) {
+      throw new Error("Data HKP tidak ditemukan.");
+    }
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
 
-        const data = await response.json();
-        setHkp(data);
+    const data = await response.json();
+    setHkp(data);
 
-      } catch (e) {
-        console.error("Failed to fetch HKP detail:", e);
-      } finally {
-        setIsLoading(false);
-      }
-    };
+  } catch (e) {
+    console.error("Failed to fetch HKP detail:", e);
+  } finally {
+    setIsLoading(false);
+  }
+};
+
 
     fetchHkpDetail();
   }, [code]); // Jalankan ulang saat 'code' berubah

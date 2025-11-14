@@ -12,7 +12,7 @@ const HKPLMTADLP = () => { // Ganti nama fungsi
   useEffect(() => {
     const fetchHkpDetail = async () => {
       try {
-        const API_URL = `http://localhost:8000/api/hkp/HKPL-MTADLP`; 
+        const API_URL = `${process.env.REACT_APP_API_URL}/api/hkp/HKPL-MTADLP`;
         const response = await fetch(API_URL);
 
         if (response.status === 404) {

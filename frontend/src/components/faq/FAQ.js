@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 const FAQ = () => {
   const [faqData, setFaqData] = useState([]); // State untuk menyimpan data FAQ dari API
   const [loading, setLoading] = useState(true);
-  const API_URL = "http://localhost:8000/api/faq"; // Ganti dengan URL API Anda!
+  const API_URL = process.env.REACT_APP_API_URL +  "/api/faq"; // Ganti dengan URL API Anda!
 
   useEffect(() => {
     const fetchFaq = async () => {

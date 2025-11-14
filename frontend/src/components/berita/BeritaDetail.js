@@ -1,5 +1,3 @@
-// BeritaDetail.js
-
 import React, { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import Footer from "../home/Footer";
@@ -11,6 +9,9 @@ const BeritaDetail = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  // Ambil base URL dari environment (.env)
+  const API_BASE = process.env.REACT_APP_API_URL;
+
   useEffect(() => {
     if (!id) {
       setError("ID berita tidak ditemukan di URL.");
@@ -20,7 +21,7 @@ const BeritaDetail = () => {
 
     const fetchDetail = async () => {
       try {
-        const API_URL = `http://localhost:8000/api/berita/${id}`;
+        const API_URL = `${API_BASE}/api/berita/${id}`;
         const response = await fetch(API_URL);
 
         if (response.status === 404) {
@@ -41,7 +42,7 @@ const BeritaDetail = () => {
     };
 
     fetchDetail();
-  }, [id]);
+  }, [id, API_BASE]);
 
   if (isLoading) {
     return (
@@ -85,15 +86,17 @@ const BeritaDetail = () => {
             </Link>
 
             {/* Gambar Utama */}
-            <img
-  src={`http://localhost:8000${berita.image}`}
-  alt={berita.title}
-  className="img-fluid rounded-top"
-  style={{ objectFit: "cover", maxHeight: "400px", width: "100%" }}
-/>
+            {berita.image && (
+              <img
+                src={`${API_BASE}${berita.image}`}
+                alt={berita.title}
+                className="img-fluid rounded-top"
+                style={{ objectFit: "cover", maxHeight: "400px", width: "100%" }}
+              />
+            )}
 
             {/* Metadata */}
-            <div className="text-muted small mb-3">
+            <div className="text-muted small mb-3 mt-2">
               Dipublikasikan pada: {berita.published_at || "Tanggal Tidak Diketahui"}
               {berita.author && ` oleh ${berita.author}`}
             </div>
@@ -113,7 +116,7 @@ const BeritaDetail = () => {
             {/* Tombol Back di bawah konten */}
             <div className="text-center">
               <Link
-                to="/"
+                to="/berita"
                 className="btn btn-lg"
                 style={{ backgroundColor: "#A8A196", color: "white" }}
               >

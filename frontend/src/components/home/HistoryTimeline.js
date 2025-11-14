@@ -12,7 +12,7 @@ const HistoryTimeline = () => {
   const [loading, setLoading] = useState(true);
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  const API_URL = 'http://localhost:8000/api/history'; 
+   const API_URL = process.env.REACT_APP_API_URL + "/api/history";
 
   // HOOK useEffect UNTUK FETCH DATA
   useEffect(() => {

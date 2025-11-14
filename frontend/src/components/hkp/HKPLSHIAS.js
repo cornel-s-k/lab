@@ -12,7 +12,7 @@ const HKPLSHIAS = () => {
   useEffect(() => {
     const fetchHkpDetail = async () => {
       try {
-        const API_URL = `http://localhost:8000/api/hkp/HKPL-SHIAS`; 
+        const API_URL = `${process.env.REACT_APP_API_URL}/api/hkp/HKPL-SHIAS`; 
         const response = await fetch(API_URL);
 
         if (response.status === 404) {

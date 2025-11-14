@@ -6,7 +6,7 @@ import {
 import Header from "../home/Header";
 import Footer from "../home/Footer";
 
-const API_URL = "http://localhost:8000/api/sdm";
+const API_URL = process.env.REACT_APP_API_URL + "/api/sdm";
 
 const renderActiveShape = (props) => {
   const RADIAN = Math.PI / 180;

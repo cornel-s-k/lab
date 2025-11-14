@@ -9,7 +9,8 @@ const FasilitasDetail2 = ({ initialFacility, initialDetail }) => {
   // Gunakan data yang sudah di-fetch oleh FacilityRouter
   const facility = initialFacility;
   const detail = initialDetail;
-  const baseUrl = "http://localhost:8000/storage/";
+  const API_BASE_URL = process.env.REACT_APP_API_URL;
+  const baseUrl = `${API_BASE_URL}/storage/`;
 
   // Karena data sudah diverifikasi dan ada (melalui FacilityRouter), 
   // kita bisa langsung mengambil properti.

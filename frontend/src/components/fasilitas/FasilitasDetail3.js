@@ -8,7 +8,8 @@ const FasilitasDetail3 = ({ initialFacility, initialDetail }) => {
     // Gunakan data yang sudah di-fetch oleh FacilityRouter
     const facility = initialFacility;
     const detail = initialDetail;
-    const baseUrl = "http://localhost:8000/storage/"; 
+    const API_BASE_URL = process.env.REACT_APP_API_URL;
+    const baseUrl = `${API_BASE_URL}/storage/`;
 
     // Data dari Facility
     const { title: facilityTitle } = facility;

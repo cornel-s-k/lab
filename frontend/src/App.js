@@ -87,7 +87,7 @@ function App() {
         <Route path="/hkp/HKPL-SHIAS" element={<HKPLSHIAS/>} />
         <Route path="/hkp/HKPL-MTADLP" element={< HKPLMTADLP />} />
 
-        <Route path="/berita" element={<BeritaList />} />          
+        <Route path="/berita" element={<BeritaList />} /> 
         <Route path="/berita/:id" element={<BeritaDetail />} /> 
         <Route path="/katalog/:slug" element={<ProductDetail />} />
         

@@ -5,7 +5,7 @@ import React, { useState, useEffect } from "react";
 const MitraKerjasama = () => {
   const [partners, setPartners] = useState([]);
   const [loading, setLoading] = useState(true);
-  const API_URL = 'http://localhost:8000/api/partners'; 
+  const API_URL = process.env.REACT_APP_API_URL + "/api/partners"; 
 
   useEffect(() => {
     const fetchPartners = async () => {

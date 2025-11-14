@@ -35,7 +35,8 @@ const FacilityRouter = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
-    const apiEndpoint = `http://localhost:8000/api/facilities/${slug}`; 
+    const API_BASE_URL = process.env.REACT_APP_API_URL;
+    const apiEndpoint = `${API_BASE_URL}/api/facilities/${slug}`; 
 
     useEffect(() => {
         const fetchFacilityData = async () => {

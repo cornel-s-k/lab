@@ -18,28 +18,28 @@ const ProductDetail = () => {
       return;
     }
 
-    const fetchDetail = async () => {
-      try {
-        // Pastikan ini sudah mengarah ke endpoint Laravel yang benar
-        const API_URL = `http://localhost:8000/api/products/${slug}`;
-        const response = await fetch(API_URL);
+const fetchDetail = async () => {
+  try {
+    const API_URL = `${process.env.REACT_APP_API_URL}/api/products/${slug}`;
+    const response = await fetch(API_URL);
 
-        if (response.status === 404) {
-          throw new Error("Produk tidak ditemukan.");
-        }
-        if (!response.ok) {
-          throw new Error(`Gagal mengambil data. Status: ${response.status}`);
-        }
+    if (response.status === 404) {
+      throw new Error("Produk tidak ditemukan.");
+    }
+    if (!response.ok) {
+      throw new Error(`Gagal mengambil data. Status: ${response.status}`);
+    }
 
-        const jsonResponse = await response.json();
-        setProduct(jsonResponse.data); 
-      } catch (e) {
-        setError(e.message);
-        console.error("Gagal mengambil detail produk:", e);
-      } finally {
-        setIsLoading(false);
-      }
-    };
+    const jsonResponse = await response.json();
+    setProduct(jsonResponse.data);
+  } catch (e) {
+    setError(e.message);
+    console.error("Gagal mengambil detail produk:", e);
+  } finally {
+    setIsLoading(false);
+  }
+};
+
 
     fetchDetail();
   }, [slug]); // Dependency array menggunakan 'slug'
@@ -83,12 +83,13 @@ const ProductDetail = () => {
             >
               <i className="bi bi-arrow-left me-2"></i> Kembali ke Daftar Produk
             </Link>
-            <img
-              src={`http://localhost:8000${product.image}`}
-              alt={product.title}
-              className="img-fluid rounded-top"
-              style={{ objectFit: "cover", maxHeight: "400px", width: "100%" }}
-            />
+<img
+  src={`${process.env.REACT_APP_API_URL}${product.image}`}
+  alt={product.title}
+  className="img-fluid rounded-top"
+  style={{ objectFit: "cover", maxHeight: "400px", width: "100%" }}
+/>
+
             <h1 className="fw-bold mb-4 text-dark">{product.title}</h1>
 
             <div className="card shadow-sm p-4 border-0 rounded-4 mb-5">

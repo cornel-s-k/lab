@@ -6,7 +6,7 @@ const VideoSection = () => {
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
-        const API_URL = "http://localhost:8000/api/page-links/video"; 
+       const API_URL = process.env.REACT_APP_API_URL + "/api/page-links/video"; 
 
         const fetchVideoLink = async () => {
             try {

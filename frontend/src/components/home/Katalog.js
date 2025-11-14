@@ -4,7 +4,7 @@ import ProductCard from '../katalog/ProductCard';
 import ProductDetail from '../katalog/ProductDetail';
 
 // URL API Laravel Anda
-const API_URL = 'http://localhost:8000/api'; 
+const API_URL = process.env.REACT_APP_API_URL + '/api';
 
 const ProductCatalog = () => {
   const [products, setProducts] = useState([]);

@@ -10,7 +10,7 @@ const HKPSection = () => {
   useEffect(() => {
     const fetchHkps = async () => {
       try {
-        const API_URL = "http://localhost:8000/api/hkp"; 
+        const API_URL = process.env.REACT_APP_API_URL + "/api/hkp";
         const response = await fetch(API_URL);
 
         if (!response.ok) {

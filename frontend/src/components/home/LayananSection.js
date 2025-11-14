@@ -14,7 +14,7 @@ const LayananSection = () => {
   useEffect(() => {
     const fetchServices = async () => {
       try {
-        const API_URL = "http://localhost:8000/api/layanan"; 
+        const API_URL = process.env.REACT_APP_API_URL + "/api/layanan"; 
         
         const response = await fetch(API_URL);
 

@@ -1,18 +1,19 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-// import "bootstrap/dist/css/bootstrap.min.css"; 
 
 const FasilitasSection = () => {
   const [fasilitasList, setFasilitasList] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const API_BASE_URL = "http://localhost:8000/api/facilities";
+  // ✅ Ambil dari .env
+  const API_BASE_URL = process.env.REACT_APP_API_URL || "http://localhost:8000";
+  const API_URL = `${API_BASE_URL}/api/facilities`;
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(API_BASE_URL);
+        const response = await fetch(API_URL);
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
@@ -24,7 +25,7 @@ const FasilitasSection = () => {
           title: item.title,
           slug: item.slug,
           status: item.status,
-           image: item.image, 
+          image: item.image,
         }));
 
         setFasilitasList(processedData);
@@ -38,7 +39,7 @@ const FasilitasSection = () => {
     };
 
     fetchData();
-  }, []);
+  }, [API_URL]);
 
   let content;
   if (isLoading) {
@@ -56,7 +57,9 @@ const FasilitasSection = () => {
       </p>
     );
   } else {
-    content = <FasilitasGrid fasilitasList={fasilitasList} />;
+    content = (
+      <FasilitasGrid fasilitasList={fasilitasList} API_BASE_URL={API_BASE_URL} />
+    );
   }
 
   return (
@@ -121,34 +124,40 @@ const FasilitasSection = () => {
   );
 };
 
-const FasilitasGrid = ({ fasilitasList }) => (
-  <div className="row g-4 justify-content-center">
-    {fasilitasList.map((item) => (
-      <div key={item.id} className="col-sm-10 col-md-6 col-lg-4 d-flex">
-        <div className="card fasilitas-card shadow-sm rounded-4 w-100 d-flex flex-column">
-          <img
-            src={`http://localhost:8000/storage/${item.image}`}
-            alt={item.title}
-            className="card-img-top rounded-4"
-            style={{ height: "200px", objectFit: "cover" }}
-          />
+// ✅ Terima base URL juga biar gambar gak hardcoded ke localhost
+const FasilitasGrid = ({ fasilitasList, API_BASE_URL }) => {
+  const STORAGE_URL = `${API_BASE_URL}/storage/`;
 
-          <div className="card-body d-flex flex-column justify-content-between">
-            <div>
-              <span className="status-label">{item.status}</span>
-              <h5 className="card-title">{item.title}</h5>
+  return (
+    <div className="row g-4 justify-content-center">
+      {fasilitasList.map((item) => (
+        <div key={item.id} className="col-sm-10 col-md-6 col-lg-4 d-flex">
+          <div className="card fasilitas-card shadow-sm rounded-4 w-100 d-flex flex-column">
+            <img
+              src={`${STORAGE_URL}${item.image}`}
+              alt={item.title}
+              className="card-img-top rounded-4"
+              style={{ height: "200px", objectFit: "cover" }}
+              onError={(e) => (e.target.src = "/placeholder.jpg")}
+            />
+
+            <div className="card-body d-flex flex-column justify-content-between">
+              <div>
+                <span className="status-label">{item.status}</span>
+                <h5 className="card-title">{item.title}</h5>
+              </div>
+              <Link
+                to={`/fasilitas/${item.slug}`}
+                className="btn mt-auto details-btn align-self-start"
+              >
+                Details
+              </Link>
             </div>
-            <Link
-              to={`/fasilitas/${item.slug}`}
-              className="btn mt-auto details-btn align-self-start"
-            >
-              Details
-            </Link>
           </div>
         </div>
-      </div>
-    ))}
-  </div>
-);
+      ))}
+    </div>
+  );
+};
 
 export default FasilitasSection;
