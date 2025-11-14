@@ -1,5 +1,27 @@
 [build]
 builder = "nixpacks"
 
+# TAMBAHIN INI: Semua perintah deploy (migrasi, update DB, pindah file, cache)
+[start]
+command = """
+echo '=== RAILWAY.TOML JALAN! ===' && \
+mkdir -p storage/app/public public/partners && \
+chmod -R 777 storage public/partners && \
+php artisan migrate --force && \
+echo 'Update logo_url di database...' && \
+php artisan tinker --execute=\"App\\Models\\Partner::all()->each(function (\\$p) { \\$url = \\$p->logo_url; if (strpos(\\$url, '/') !== false) { \\$p->logo_url = substr(\\$url, strrpos(\\$url, '/') + 1); \\$p->save(); } });\" && \
+echo 'Pindahkan file ke public/partners...' && \
+cp -r storage/app/public/* public/partners/ 2>/dev/null || true && \
+echo '=== CEK FILE SUDAH DIPINDAH ===' && \
+ls -la public/partners/ | head -5 && \
+php artisan config:cache && \
+php artisan route:cache && \
+php artisan view:cache && \
+echo '=== DEPLOY SELESAI! ===' && \
+php artisan serve --host 0.0.0.0 --port ${PORT}
+"""
+
 [deploy]
-startCommand = "php artisan serve --host=0.0.0.0 --port=${PORT}"
+startCommand = "php artisan serve --host=0.0.0.0 --port ${PORT}"
+restartPolicyType = "ON_FAILURE"
+restartPolicyMaxRetries = 3
