@@ -59,6 +59,13 @@ return [
             'throw' => false,
             'report' => false,
         ],
+        'railway_volume' => [
+            'driver' => 'local', 
+            'root' => '/mnt/storage/app/public', 
+            'url' => env('APP_URL') . '/storage', 
+            'visibility' => 'public',
+            'throw' => false,
+        ],
 
     ],
 
@@ -77,13 +84,5 @@ return [
         public_path('storage') => storage_path('app/public'),
     ],
 
-    'railway_volume' => [
-        'driver' => 'local', 
-        // Path ini HARUS sama dengan Mount Path di Railway + subfolder yang Anda inginkan
-        'root' => '/mnt/storage/app/public', 
-        'url' => env('APP_URL') . '/storage', 
-        'visibility' => 'public',
-        'throw' => false,
-    ],
 
 ];
