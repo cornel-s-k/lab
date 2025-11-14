@@ -47,9 +47,7 @@ class PartnerResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\ImageColumn::make('logo_url')
-                    ->label('Logo'),
-                    ->height(60)
-                    ->width(60)
+                    ->label('Logo')
                     ->circular()
                     ->getStateUsing(fn ($record) => asset('partners/' . $record->logo_url)),
                 Tables\Columns\TextColumn::make('name')
