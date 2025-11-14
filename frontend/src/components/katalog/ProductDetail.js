@@ -4,15 +4,19 @@ import { Link, useParams } from "react-router-dom";
 import Footer from "../home/Footer";
 import "bootstrap/dist/css/bootstrap.min.css";
 
+// 💡 IMPORT GAMBAR PLACEHOLDER LOKAL UNTUK DETAIL
+import detailPlaceholderImageUrl from '../../assets/katalog/owc.JPG'; 
+// Sesuaikan path import ini jika letak folder assets berbeda
+
 const ProductDetail = () => {
   // Menggunakan 'slug' dari URL untuk mengambil detail produk
   const { slug } = useParams(); 
-  const [product, setProduct] = useState(null); // State diganti menjadi 'product'
+  const [product, setProduct] = useState(null); 
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    if (!slug) { // Mengecek 'slug'
+    if (!slug) { 
       setError("Slug produk tidak ditemukan di URL.");
       setIsLoading(false);
       return;
@@ -70,7 +74,10 @@ const fetchDetail = async () => {
       </div>
     );
   }
-  
+  
+  // 💡 HARDCODE IMAGE URL: Placeholder yang lebih besar untuk detail
+  const detailPlaceholderImageUrl = 'https://via.placeholder.com/800x400?text=DETAIL+LAYANAN+ELSA';
+
   return (
     <div className="bg-white" style={{ paddingTop: "100px" }}>
       <div className="container py-5 my-5">
@@ -84,7 +91,8 @@ const fetchDetail = async () => {
               <i className="bi bi-arrow-left me-2"></i> Kembali ke Daftar Produk
             </Link>
 <img
-  src={`${process.env.REACT_APP_API_URL}${product.image}`}
+  // Menggunakan gambar hardcode, mengabaikan data dari product.image
+  src={detailPlaceholderImageUrl} 
   alt={product.title}
   className="img-fluid rounded-top"
   style={{ objectFit: "cover", maxHeight: "400px", width: "100%" }}
