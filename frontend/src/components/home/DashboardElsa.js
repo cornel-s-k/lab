@@ -10,7 +10,7 @@ const DashboardElsa = () => {
 
     useEffect(() => {
         // Endpoint ini harus Anda buat untuk mengambil link 'Capaian ELSA'
-        const API_URL = "http://localhost:8000/api/page-links/capaian-elsa"; 
+        const API_URL = process.env.REACT_APP_API_URL + "/api/page-links/capaian-elsa"; 
 
         const fetchDashboardLink = async () => {
             try {

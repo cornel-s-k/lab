@@ -60,12 +60,12 @@ return [
             'report' => false,
         ],
         'railway_volume' => [
-            'driver' => 'local', 
-            'root' => '/mnt/storage/app/public', 
-            'url' => env('APP_URL') . '/storage', 
-            'visibility' => 'public',
-            'throw' => false,
-        ],
+    'driver' => 'local', 
+    'root' => storage_path('app/public'), // <- gunakan ini
+    'url' => env('APP_URL') . '/storage', 
+    'visibility' => 'public',
+    'throw' => false,
+],
 
     ],
 
