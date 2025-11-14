@@ -2,7 +2,7 @@
 set -e
 
 echo "Update logo_url di database..."
-php artisan tinker --execute="\App\Models\Partner::all()->each(function (\$p) { \$url = \$p->logo_url; if (str_contains(\$url, '/')) { \$p->logo_url = substr(\$url, strrpos(\$url, '/') + 1); \$p->save(); } });"
+php artisan tinker --execute=" \App\Models\Partner::all()->each(function ($partner) { $url = $partner->logo_url; if (str_contains($url, '/')) { $filename = substr($url, strrpos($url, '/') + 1); $partner->logo_url = $filename; $partner->save(); } });"
 
 echo "Pindahkan file ke public/partners..."
 mkdir -p public/partners
