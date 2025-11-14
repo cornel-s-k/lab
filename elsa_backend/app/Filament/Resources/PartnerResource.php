@@ -32,7 +32,7 @@ class PartnerResource extends Resource
                     ->image()
                     ->visibility('public')
                     ->disk('public') // Simpan di disk 'public'
-                    ->directory('partner-logos') // Simpan di folder storage/app/public/partner-logos
+                    ->directory('partners') // Simpan di folder storage/app/public/partner-logos
                     ->label('Logo Mitra'),
 
                 TextInput::make('order_index')
@@ -48,6 +48,10 @@ class PartnerResource extends Resource
             ->columns([
                 Tables\Columns\ImageColumn::make('logo_url')
                     ->label('Logo'),
+                    ->height(60)
+                    ->width(60)
+                    ->circular()
+                    ->getStateUsing(fn ($record) => asset('partners/' . $record->logo_url)),
                 Tables\Columns\TextColumn::make('name')
                     ->searchable()
                     ->sortable(),
