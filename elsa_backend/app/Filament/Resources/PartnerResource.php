@@ -5,13 +5,14 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\PartnerResource\Pages;
 use App\Models\Partner;
 use Filament\Forms;
-use Filament\Forms\Components\FileUpload; // Import untuk logo
-use Filament\Forms\Components\TextInput; // Import untuk nama & urutan
+use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
+use Filament\Tables\Columns\ImageColumn;
+use Filament\Tables\Columns\TextColumn;
 
 class PartnerResource extends Resource
 {
@@ -23,21 +24,21 @@ class PartnerResource extends Resource
         return $form
             ->schema([
                 TextInput::make('name')
-                    ->required() // Wajib diisi karena NOT NULL
+                    ->required()
                     ->maxLength(255)
                     ->label('Nama Mitra'),
 
                 FileUpload::make('logo_url')
-                    ->required() // Wajib diisi karena NOT NULL
+                    ->required()
                     ->image()
                     ->visibility('public')
-                    ->disk('public') // Simpan di disk 'public'
-                    ->directory('partners') // Simpan di folder storage/app/public/partner-logos
+                    ->disk('public')
+                    ->directory('partner-logos') // ← SESUAI DENGAN ImageColumn!
                     ->label('Logo Mitra'),
 
                 TextInput::make('order_index')
                     ->numeric()
-                    ->nullable() // Boleh kosong, sesuai migrasi
+                    ->nullable()
                     ->label('Urutan Tampil'),
             ]);
     }
@@ -46,17 +47,21 @@ class PartnerResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\ImageColumn::make('logo_url')
+                ImageColumn::make('logo_url')
                     ->label('Logo')
                     ->circular()
                     ->getStateUsing(fn ($record) => asset('storage/' . $record->logo_url)),
-                Tables\Columns\TextColumn::make('name')
+                    // → storage/partner-logos/01K85...png → BENAR!
+
+                TextColumn::make('name')
                     ->searchable()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('order_index')
+
+                TextColumn::make('order_index')
                     ->sortable()
                     ->label('Urutan'),
-                Tables\Columns\TextColumn::make('created_at')
+
+                TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
@@ -76,9 +81,7 @@ class PartnerResource extends Resource
 
     public static function getRelations(): array
     {
-        return [
-            //
-        ];
+        return [];
     }
 
     public static function getPages(): array
