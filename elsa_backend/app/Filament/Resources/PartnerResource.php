@@ -30,6 +30,7 @@ class PartnerResource extends Resource
                 FileUpload::make('logo_url')
                     ->required() // Wajib diisi karena NOT NULL
                     ->image()
+                    ->visibility('public')
                     ->disk('public') // Simpan di disk 'public'
                     ->directory('partner-logos') // Simpan di folder storage/app/public/partner-logos
                     ->label('Logo Mitra'),
