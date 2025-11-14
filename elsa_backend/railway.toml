@@ -4,17 +4,17 @@ builder = "nixpacks"
 [start]
 command = """
 echo '=== RAILWAY.TOML JALAN! ===' && \
-echo '=== CEK LOGO_URL SEBELUM ===' && \
-php artisan tinker --execute=\"echo \\App\\Models\\Partner::first()->logo_url ?? 'NULL';\" && \
-echo 'UPDATE LOGO_URL KE NAMA FILE SAJA...' && \
-php artisan tinker --execute=\"\\App\\Models\\Partner::all()->each(function (\\$p) { \\$url = \\$p->logo_url; if (\\$url && str_contains(\\$url, '/')) { \\$p->logo_url = basename(\\$url); \\$p->save(); } });\" && \
-echo '=== CEK LOGO_URL SESUDAH ===' && \
-php artisan tinker --execute=\"echo \\App\\Models\\Partner::first()->logo_url ?? 'NULL';\" && \
-echo 'PINDAHKAN FILE KE PUBLIC...' && \
+echo '=== CEK LOGO_URL SEBELUM UPDATE ===' && \
+php artisan tinker --execute=\"echo \\\"SEBELUM: \\\" . (\\App\\Models\\Partner::first()->logo_url ?? 'NULL');\" && \
+echo 'UPDATE LOGO_URL KE NAMA FILE SAJA (basename)...' && \
+php artisan tinker --execute=\"\\App\\Models\\Partner::all()->each(function (\\$p) { if (\\$p->logo_url) { \\$p->logo_url = basename(\\$p->logo_url); \\$p->save(); } });\" && \
+echo '=== CEK LOGO_URL SESUDAH UPDATE ===' && \
+php artisan tinker --execute=\"echo \\\"SESUDAH: \\\" . (\\App\\Models\\Partner::first()->logo_url ?? 'NULL');\" && \
+echo 'PINDAHKAN FILE KE public/partners...' && \
 mkdir -p public/partners && \
-cp -r storage/app/public/* public/partners/ 2>/dev/null || true && \
-echo '=== ISI public/partners ===' && \
-ls -la public/partners/ | head -5 && \
+cp -r storage/app/public/* public/partners/ 2>/dev/null || echo 'GAGAL COPY: folder kosong' && \
+echo '=== ISI public/partners SESUDAH ===' && \
+ls -la public/partners/ | head -10 && \
 php artisan config:cache && \
 php artisan route:cache && \
 php artisan view:cache && \
