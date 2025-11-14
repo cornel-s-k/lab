@@ -45,13 +45,13 @@ class AdminelsaPanelProvider extends PanelProvider
                 VerifyCsrfToken::class,
                 SubstituteBindings::class,
             ])
-            // 🔥 Hapus sementara auth biar gak 403 waktu ngetes
-            ->authMiddleware([]); 
+            ->authMiddleware([
+                Authenticate::class,
+            ]);
     }
 
     public function canAccessPanel(Panel $panel): bool
     {
-        // 🔓 Izinkan akses tanpa batas sementara
-        return true;
+        return true; // sementara biar gak 403 dulu
     }
 }
