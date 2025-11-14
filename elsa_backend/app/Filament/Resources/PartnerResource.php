@@ -49,7 +49,7 @@ class PartnerResource extends Resource
                 Tables\Columns\ImageColumn::make('logo_url')
                     ->label('Logo')
                     ->circular()
-                    ->getStateUsing(fn ($record) => asset('partners/' . $record->logo_url)),
+                    ->getStateUsing(fn ($record) => asset('storage/' . $record->logo_url)),
                 Tables\Columns\TextColumn::make('name')
                     ->searchable()
                     ->sortable(),
